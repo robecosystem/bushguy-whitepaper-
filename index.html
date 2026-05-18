@@ -1642,6 +1642,325 @@ nav a:hover{
   background:rgba(153,69,255,0.08);
 }
 
+/* WHITEPAPER SECTION */
+
+.whitepaper-section{
+  padding:3rem 2rem;
+  background:rgba(153,69,255,0.02);
+  border-top:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+
+.whitepaper-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 10% 50%, rgba(153,69,255,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 50%, rgba(0,255,65,0.05) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+.whitepaper-inner{
+  position:relative;
+  z-index:1;
+}
+
+.whitepaper-hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3rem;
+  flex-wrap:wrap;
+}
+
+.whitepaper-doc-icon{
+  position:relative;
+  flex-shrink:0;
+}
+
+.wp-doc-svg{
+  width:110px;
+  filter:drop-shadow(0 0 18px rgba(153,69,255,0.5)) drop-shadow(0 0 40px rgba(0,255,65,0.2));
+  animation:robot-float 5s ease-in-out infinite;
+}
+
+.whitepaper-info{
+  max-width:520px;
+}
+
+.whitepaper-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0.6rem;
+  background:rgba(153,69,255,0.1);
+  border:1px solid rgba(153,69,255,0.35);
+  color:var(--sol);
+  font-family:'Orbitron',sans-serif;
+  font-size:0.6rem;
+  letter-spacing:0.2em;
+  padding:0.4rem 0.9rem;
+  margin-bottom:1rem;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+
+.whitepaper-badge-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--sol);
+  animation:blink 1.2s step-end infinite;
+}
+
+.whitepaper-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.3rem,2.8vw,2rem);
+  font-weight:900;
+  letter-spacing:0.1em;
+  color:var(--green);
+  text-shadow:0 0 16px var(--green-glow);
+  margin-bottom:0.5rem;
+  line-height:1.15;
+}
+
+.whitepaper-desc{
+  font-size:0.72rem;
+  color:var(--green-dim);
+  letter-spacing:0.08em;
+  line-height:1.9;
+  margin-bottom:1.5rem;
+}
+
+.whitepaper-meta-row{
+  display:flex;
+  gap:1.5rem;
+  flex-wrap:wrap;
+  margin-bottom:1.8rem;
+}
+
+.whitepaper-meta-item{
+  display:flex;
+  flex-direction:column;
+  gap:0.2rem;
+}
+
+.whitepaper-meta-label{
+  font-size:0.55rem;
+  letter-spacing:0.2em;
+  color:var(--green-dim);
+  text-transform:uppercase;
+}
+
+.whitepaper-meta-label::before{
+  content:'// ';
+}
+
+.whitepaper-meta-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.75rem;
+  color:var(--green);
+}
+
+.whitepaper-btns{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.wp-btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:0.8rem;
+  background:linear-gradient(135deg,var(--sol),#7b2fff);
+  color:#fff;
+  text-decoration:none;
+  padding:0.9rem 1.8rem;
+  font-family:'Orbitron',sans-serif;
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  transition:all 0.25s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  position:relative;
+  overflow:hidden;
+}
+
+.wp-btn-primary::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+
+.wp-btn-primary:hover::before{
+  opacity:1;
+}
+
+.wp-btn-primary:hover{
+  box-shadow:0 0 28px rgba(153,69,255,0.6), 0 0 60px rgba(153,69,255,0.2);
+  transform:translateY(-2px);
+}
+
+.wp-btn-secondary{
+  display:inline-flex;
+  align-items:center;
+  gap:0.7rem;
+  border:1px solid rgba(153,69,255,0.4);
+  color:var(--sol);
+  text-decoration:none;
+  padding:0.9rem 1.4rem;
+  font-size:0.68rem;
+  letter-spacing:0.12em;
+  transition:all 0.25s;
+}
+
+.wp-btn-secondary:hover{
+  background:rgba(153,69,255,0.08);
+  border-color:var(--sol);
+  transform:translateY(-2px);
+}
+
+.whitepaper-contents{
+  margin-top:2.5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+
+.wp-contents-label{
+  font-size:0.6rem;
+  letter-spacing:0.3em;
+  color:var(--green-dim);
+  margin-bottom:1rem;
+  text-transform:uppercase;
+}
+
+.wp-contents-label::before{content:'// ';}
+
+.wp-chapters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0.8rem;
+}
+
+.wp-chapter{
+  border:1px solid var(--border);
+  padding:0.8rem;
+  background:rgba(0,0,0,0.3);
+  position:relative;
+  transition:all 0.2s;
+}
+
+.wp-chapter::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:2px;height:100%;
+  background:var(--sol);
+  opacity:0.4;
+  transition:opacity 0.2s;
+}
+
+.wp-chapter:hover{
+  border-color:rgba(153,69,255,0.4);
+  background:rgba(153,69,255,0.05);
+}
+
+.wp-chapter:hover::before{
+  opacity:1;
+}
+
+.wp-chapter-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.6rem;
+  color:var(--sol);
+  opacity:0.7;
+  margin-bottom:0.3rem;
+  display:block;
+}
+
+.wp-chapter-title{
+  font-size:0.65rem;
+  color:var(--green-dim);
+  letter-spacing:0.08em;
+  line-height:1.4;
+}
+
+@media(max-width:900px){
+  .wp-chapters{grid-template-columns:repeat(2,1fr);}
+  .whitepaper-hero{gap:2rem;}
+}
+
+@media(max-width:600px){
+  .wp-chapters{grid-template-columns:1fr 1fr;}
+}
+
+/* FLOATING WHITEPAPER BUTTON */
+
+.wp-float{
+  position:fixed;
+  bottom:28px;
+  right:24px;
+  z-index:8888;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.4rem;
+  text-decoration:none;
+  animation:wp-float-bob 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(153,69,255,0.5));
+}
+
+@keyframes wp-float-bob{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+
+.wp-float:hover{
+  filter:drop-shadow(0 0 22px rgba(153,69,255,0.9)) drop-shadow(0 0 40px rgba(0,255,65,0.3));
+}
+
+.wp-float-icon{
+  width:48px;
+  height:58px;
+  position:relative;
+}
+
+.wp-float-svg{
+  width:48px;
+  height:58px;
+}
+
+.wp-float-pulse{
+  position:absolute;
+  inset:-6px;
+  border-radius:4px;
+  border:1px solid var(--sol);
+  opacity:0;
+  animation:wp-pulse-ring 2s ease-out infinite;
+}
+
+@keyframes wp-pulse-ring{
+  0%{transform:scale(0.9);opacity:0.7;}
+  100%{transform:scale(1.4);opacity:0;}
+}
+
+.wp-float-label{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.45rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  color:var(--sol);
+  text-align:center;
+  text-shadow:0 0 8px rgba(153,69,255,0.6);
+  white-space:nowrap;
+  background:rgba(1,11,1,0.85);
+  padding:0.2rem 0.4rem;
+  border:1px solid rgba(153,69,255,0.3);
+}
+
 /* EMAIL SIGNUP */
 
 .signup-section{
@@ -1866,7 +2185,7 @@ UNIT: <span>RB-7749</span> |
 CHAIN: <span class="sol-s">SOLANA</span> |
 AI: <span>ONLINE</span><br>
 
-SUPPLY: <span>120,690,000</span> |
+SUPPLY: <span>9,999,998</span> |
 CIRC: <span>100%</span>
 
 </div>
@@ -1881,6 +2200,7 @@ CIRC: <span>100%</span>
 <a href="#token-sec">TOKENOMICS</a>
 <a href="#presale-sec">PRESALE</a>
 <a href="#stake-sec">STAKE</a>
+<a href="#whitepaper-sec">WHITEPAPER</a>
 <a href="#buy-sec">BUY</a>
 <a href="#contact-sec">CONTACT</a>
 </nav>
@@ -2291,7 +2611,7 @@ class="carousel-img">
 <div class="phone-console">
 &gt; $ROB CONNECTED<br>
 &gt; PRESALE ACTIVE<br>
-&gt; LIQUIDITY: 35%<br>
+&gt; LIQUIDITY: 31%<br>
 &gt; STATUS: ONLINE
 </div>
 
@@ -2309,7 +2629,7 @@ class="carousel-img">
 
 <li>Symbol: <span>$ROB</span></li>
 
-<li>Supply: <span>120,690,000</span></li>
+<li>Supply: <span>9,999,998</span></li>
 
 <li>Circulation: <span>100%</span></li>
 
@@ -2360,7 +2680,7 @@ SYSTEM INTELLIGENCE BRIEF — CLASSIFIED LEVEL 7
 <span class="about-highlight">ROBOTIC ($ROB)</span> is the most mechanically engineered meme token ever deployed on the Solana blockchain. Born from the circuits of chaos and the logic gates of pure degenerate finance, ROBOTIC is not just a token — it is an autonomous economic unit programmed to disrupt.
 </p>
 <p>
-Unit <span class="about-highlight">RB-7749</span> was initialized on the Solana network with a fixed supply of <span class="about-highlight">120,690,000 $ROB</span> tokens — 100% in circulation from genesis. No minting. No inflation. No dev wallet rugs. Just raw, uncut, machine-grade tokenomics hardcoded into the blockchain.
+Unit <span class="about-highlight">RB-7749</span> was initialized on the Solana network with a fixed supply of <span class="about-highlight">9,999,998 $ROB</span> tokens — 100% in circulation from genesis. No minting. No inflation. No dev wallet rugs. Just raw, uncut, machine-grade tokenomics hardcoded into the blockchain.
 </p>
 <p>
 ROBOTIC operates on a <span class="about-highlight">zero-emotion protocol</span>. While humans panic-sell and FUD, Unit RB-7749 continues to execute. Every transaction is a command. Every holder is a node in the ROBOTIC network. The mission: achieve maximum distribution across the Solana ecosystem and beyond.
@@ -2369,7 +2689,7 @@ ROBOTIC operates on a <span class="about-highlight">zero-emotion protocol</span>
 
 <div class="about-stats">
 <div class="about-stat">
-  <span class="about-stat-val">120.69M</span>
+  <span class="about-stat-val">9,999,998</span>
   <span class="about-stat-label">Total Supply</span>
 </div>
 <div class="about-stat">
@@ -2490,7 +2810,7 @@ $ROB
 </span>
 
 <div class="token-card-val">
-120.69M
+9,999,998
 </div>
 
 <div>Total Supply</div>
@@ -2535,35 +2855,35 @@ SOLANA
       <!-- Background ring -->
       <circle cx="100" cy="100" r="75" fill="none" stroke="#0d2a0d" stroke-width="30"/>
 
-      <!-- PRESALE 55% — green — starts at 0deg (top after -90deg rotation) -->
+      <!-- PRESALE 62% — green — starts at 0deg (top after -90deg rotation) -->
       <!-- Circumference = 2π × 75 ≈ 471.24 -->
-      <!-- 55% = 259.18, gap to next -->
+      <!-- 62% = 292.17, gap = 179.07 -->
       <circle cx="100" cy="100" r="75" fill="none"
               stroke="#00ff41" stroke-width="30"
-              stroke-dasharray="259.18 212.06"
+              stroke-dasharray="292.17 179.07"
               stroke-dashoffset="0"
               filter="url(#glow-main)" opacity="0.95">
-        <animate attributeName="stroke-dasharray" values="0 471.24;259.18 212.06" dur="1.5s" fill="freeze" begin="0.2s"/>
+        <animate attributeName="stroke-dasharray" values="0 471.24;292.17 179.07" dur="1.5s" fill="freeze" begin="0.2s"/>
       </circle>
 
-      <!-- LIQUIDITY 35% — purple — offset by 55% -->
-      <!-- 35% = 164.93, offset = -259.18 (i.e. 471.24-259.18=212.06 but negated) -->
+      <!-- LIQUIDITY 31% — purple — offset by 62% -->
+      <!-- 31% = 146.08, offset = -292.17 -->
       <circle cx="100" cy="100" r="75" fill="none"
               stroke="#9945FF" stroke-width="30"
-              stroke-dasharray="164.93 306.31"
-              stroke-dashoffset="-259.18"
+              stroke-dasharray="146.08 325.16"
+              stroke-dashoffset="-292.17"
               opacity="0.9">
-        <animate attributeName="stroke-dasharray" values="0 471.24;164.93 306.31" dur="1.5s" fill="freeze" begin="0.5s"/>
+        <animate attributeName="stroke-dasharray" values="0 471.24;146.08 325.16" dur="1.5s" fill="freeze" begin="0.5s"/>
       </circle>
 
-      <!-- MARKETING 10% — amber — offset by 90% -->
-      <!-- 10% = 47.12, offset = -(259.18+164.93)=-424.11 -->
+      <!-- MARKETING 7% — amber — offset by 93% -->
+      <!-- 7% = 32.99, offset = -(292.17+146.08)=-438.25 -->
       <circle cx="100" cy="100" r="75" fill="none"
               stroke="#ffb300" stroke-width="30"
-              stroke-dasharray="47.12 424.12"
-              stroke-dashoffset="-424.11"
+              stroke-dasharray="32.99 438.25"
+              stroke-dashoffset="-438.25"
               opacity="0.9">
-        <animate attributeName="stroke-dasharray" values="0 471.24;47.12 424.12" dur="1.5s" fill="freeze" begin="0.8s"/>
+        <animate attributeName="stroke-dasharray" values="0 471.24;32.99 438.25" dur="1.5s" fill="freeze" begin="0.8s"/>
       </circle>
 
       <!-- Inner circle to create donut hole -->
@@ -2582,7 +2902,7 @@ SOLANA
     <div class="legend-item">
       <div class="legend-dot presale"></div>
       <div class="legend-info">
-        <div class="legend-pct presale">55%</div>
+        <div class="legend-pct presale">62%</div>
         <div class="legend-name">PRESALE</div>
       </div>
     </div>
@@ -2590,7 +2910,7 @@ SOLANA
     <div class="legend-item">
       <div class="legend-dot liquidity"></div>
       <div class="legend-info">
-        <div class="legend-pct liquidity">35%</div>
+        <div class="legend-pct liquidity">31%</div>
         <div class="legend-name">LIQUIDITY</div>
       </div>
     </div>
@@ -2598,7 +2918,7 @@ SOLANA
     <div class="legend-item">
       <div class="legend-dot marketing"></div>
       <div class="legend-info">
-        <div class="legend-pct marketing">10%</div>
+        <div class="legend-pct marketing">7%</div>
         <div class="legend-name">MARKETING / DEX / PARTNERSHIP</div>
       </div>
     </div>
@@ -2690,11 +3010,11 @@ OFFICIAL PARTNERS
       </div>
       <div class="presale-row">
         <span class="presale-row-label">Total Supply</span>
-        <span class="presale-row-val">120,690,000</span>
+        <span class="presale-row-val">9,999,998</span>
       </div>
       <div class="presale-row">
         <span class="presale-row-label">Presale Allocation</span>
-        <span class="presale-row-val pink">55% — 66,379,500</span>
+        <span class="presale-row-val pink">62% — 6,199,999</span>
       </div>
       <div class="presale-row">
         <span class="presale-row-label">Liquidity Lock</span>
@@ -2702,7 +3022,7 @@ OFFICIAL PARTNERS
       </div>
       <div class="presale-row">
         <span class="presale-row-label">Liquidity %</span>
-        <span class="presale-row-val">35%</span>
+        <span class="presale-row-val">31%</span>
       </div>
       <div class="presale-row">
         <span class="presale-row-label">Platform</span>
@@ -2852,6 +3172,163 @@ OFFICIAL PARTNERS
     <a href="https://t.me/robecosystem" target="_blank" class="stake-notify-btn">
       <i class="fa-brands fa-telegram"></i> TELEGRAM
     </a>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- WHITEPAPER -->
+
+<div class="section-head" id="whitepaper-sec">
+<h2>WHITEPAPER — OFFICIAL DOCUMENTATION</h2>
+<div class="line"></div>
+</div>
+
+<div class="whitepaper-section">
+<div class="whitepaper-inner">
+
+<div class="whitepaper-hero">
+
+  <!-- Document icon SVG -->
+  <div class="whitepaper-doc-icon">
+    <div class="wp-float-pulse"></div>
+    <svg class="wp-doc-svg" viewBox="0 0 110 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wpDocGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0d2a0d"/>
+          <stop offset="100%" stop-color="#050f05"/>
+        </linearGradient>
+      </defs>
+      <!-- Page body -->
+      <path d="M8 0 L78 0 L110 32 L110 140 L8 140 Z" fill="url(#wpDocGrad)" stroke="#9945FF" stroke-width="2.5"/>
+      <!-- Folded corner -->
+      <path d="M78 0 L78 32 L110 32 Z" fill="#1a0a35" stroke="#9945FF" stroke-width="2"/>
+      <!-- Corner accent -->
+      <line x1="78" y1="0" x2="110" y2="32" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+      <!-- ROB logo circle -->
+      <circle cx="55" cy="60" r="22" fill="#010b01" stroke="#9945FF" stroke-width="2"/>
+      <circle cx="55" cy="60" r="15" fill="#010b01" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+      <text x="55" y="56" font-family="Arial" font-size="7" font-weight="bold" fill="#9945FF" text-anchor="middle">$ROB</text>
+      <text x="55" y="66" font-family="Arial" font-size="5" fill="#00ff41" text-anchor="middle">WHITEPAPER</text>
+      <!-- Line decorations -->
+      <rect x="18" y="92" width="74" height="2.5" rx="1" fill="#9945FF" opacity="0.7"/>
+      <rect x="18" y="101" width="60" height="2" rx="1" fill="#00ff41" opacity="0.4"/>
+      <rect x="18" y="109" width="68" height="2" rx="1" fill="#00ff41" opacity="0.3"/>
+      <rect x="18" y="117" width="50" height="2" rx="1" fill="#00ff41" opacity="0.2"/>
+      <rect x="18" y="125" width="55" height="2" rx="1" fill="#00ff41" opacity="0.2"/>
+      <!-- V1.0 badge -->
+      <rect x="70" y="120" width="28" height="12" rx="2" fill="#9945FF" opacity="0.8"/>
+      <text x="84" y="129" font-family="Arial" font-size="6" font-weight="bold" fill="#fff" text-anchor="middle">v1.0</text>
+    </svg>
+  </div>
+
+  <!-- Info block -->
+  <div class="whitepaper-info">
+
+    <div class="whitepaper-badge">
+      <span class="whitepaper-badge-dot"></span>
+      OFFICIAL DOCUMENT — 2026
+    </div>
+
+    <div class="whitepaper-title">ROBOTIC ($ROB)<br>OFFICIAL WHITEPAPER</div>
+
+    <div class="whitepaper-desc">
+      The complete technical and economic documentation for the ROBOTIC ecosystem.<br>
+      Tokenomics. Presale mechanics. AI architecture. Staking protocol. Roadmap.<br>
+      Everything Unit RB-7749 runs on — transparent, on-chain, machine-grade.
+    </div>
+
+    <div class="whitepaper-meta-row">
+      <div class="whitepaper-meta-item">
+        <span class="whitepaper-meta-label">VERSION</span>
+        <span class="whitepaper-meta-val">v1.0 — 2026</span>
+      </div>
+      <div class="whitepaper-meta-item">
+        <span class="whitepaper-meta-label">NETWORK</span>
+        <span class="whitepaper-meta-val">SOLANA</span>
+      </div>
+      <div class="whitepaper-meta-item">
+        <span class="whitepaper-meta-label">FORMAT</span>
+        <span class="whitepaper-meta-val">PDF</span>
+      </div>
+      <div class="whitepaper-meta-item">
+        <span class="whitepaper-meta-label">PAGES</span>
+        <span class="whitepaper-meta-val">12 SECTIONS</span>
+      </div>
+    </div>
+
+    <div class="whitepaper-btns">
+      <a href="https://drive.google.com/file/d/182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6/view?usp=drivesdk"
+         target="_blank"
+         class="wp-btn-primary">
+        <i class="fa-solid fa-file-pdf"></i>
+        READ WHITEPAPER
+      </a>
+      <a href="https://drive.google.com/uc?export=download&id=182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6"
+         target="_blank"
+         class="wp-btn-secondary">
+        <i class="fa-solid fa-download"></i>
+        DOWNLOAD PDF
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Chapter index -->
+<div class="whitepaper-contents">
+  <div class="wp-contents-label">DOCUMENT CONTENTS</div>
+  <div class="wp-chapters">
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">01</span>
+      <span class="wp-chapter-title">Executive Summary</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">02</span>
+      <span class="wp-chapter-title">Introduction &amp; Vision</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">03</span>
+      <span class="wp-chapter-title">What is ROBOTIC ($ROB)?</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">04</span>
+      <span class="wp-chapter-title">Tokenomics</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">05</span>
+      <span class="wp-chapter-title">Presale Details</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">06</span>
+      <span class="wp-chapter-title">Staking Protocol</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">07</span>
+      <span class="wp-chapter-title">Technology &amp; Blockchain</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">08</span>
+      <span class="wp-chapter-title">Ecosystem &amp; Partners</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">09</span>
+      <span class="wp-chapter-title">Roadmap</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">10</span>
+      <span class="wp-chapter-title">Community &amp; Governance</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">11</span>
+      <span class="wp-chapter-title">Security &amp; Audit</span>
+    </div>
+    <div class="wp-chapter">
+      <span class="wp-chapter-num">12</span>
+      <span class="wp-chapter-title">Legal Disclaimer</span>
+    </div>
   </div>
 </div>
 
@@ -3013,6 +3490,34 @@ Zero noise. Maximum signal. 100% ROBOTIC.
 
 </div>
 </div>
+
+<!-- FLOATING WHITEPAPER BUTTON -->
+
+<a href="https://drive.google.com/file/d/182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6/view?usp=drivesdk"
+   target="_blank"
+   class="wp-float"
+   title="Read the ROBOTIC Whitepaper">
+
+  <div class="wp-float-icon">
+    <div class="wp-float-pulse"></div>
+    <svg class="wp-float-svg" viewBox="0 0 48 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Page -->
+      <path d="M3 0 L33 0 L48 15 L48 58 L3 58 Z" fill="#050f05" stroke="#9945FF" stroke-width="2"/>
+      <!-- Fold corner -->
+      <path d="M33 0 L33 15 L48 15 Z" fill="#1a0a35" stroke="#9945FF" stroke-width="1.5"/>
+      <line x1="33" y1="0" x2="48" y2="15" stroke="#00ff41" stroke-width="0.8" opacity="0.6"/>
+      <!-- $ROB text -->
+      <text x="24" y="33" font-family="Arial" font-size="7" font-weight="bold" fill="#9945FF" text-anchor="middle">$ROB</text>
+      <text x="24" y="41" font-family="Arial" font-size="4.5" fill="#00ff41" text-anchor="middle">WHITEPAPER</text>
+      <!-- Lines -->
+      <rect x="8" y="47" width="32" height="1.5" rx="0.5" fill="#9945FF" opacity="0.6"/>
+      <rect x="8" y="51" width="24" height="1.5" rx="0.5" fill="#00ff41" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <span class="wp-float-label">WHITEPAPER</span>
+
+</a>
 
 <!-- FOOTER -->
 
