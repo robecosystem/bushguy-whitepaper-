@@ -1642,6 +1642,124 @@ nav a:hover{
   background:rgba(153,69,255,0.08);
 }
 
+/* EMAIL SIGNUP */
+
+.signup-section{
+  padding:2.5rem 2rem;
+  border-top:1px solid var(--border);
+  background:rgba(0,255,65,0.015);
+  position:relative;
+  overflow:hidden;
+}
+
+.signup-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 60px,
+    rgba(0,255,65,0.015) 60px,
+    rgba(0,255,65,0.015) 61px
+  );
+  pointer-events:none;
+}
+
+.signup-inner{
+  position:relative;
+  z-index:1;
+  max-width:600px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.signup-label{
+  font-size:0.62rem;
+  letter-spacing:0.3em;
+  color:var(--green-dim);
+  margin-bottom:0.8rem;
+  text-transform:uppercase;
+}
+
+.signup-label::before{content:'// ';}
+
+.signup-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1rem,2.5vw,1.5rem);
+  font-weight:900;
+  letter-spacing:0.12em;
+  margin-bottom:0.5rem;
+  text-shadow:0 0 14px var(--green-glow);
+}
+
+.signup-desc{
+  font-size:0.68rem;
+  color:var(--green-dim);
+  letter-spacing:0.1em;
+  margin-bottom:1.8rem;
+  line-height:1.8;
+}
+
+.signup-form{
+  display:flex;
+  gap:0;
+  border:1px solid var(--border);
+  position:relative;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+
+.signup-form:focus-within{
+  border-color:var(--green);
+  box-shadow:0 0 16px rgba(0,255,65,0.2);
+}
+
+.signup-input{
+  flex:1;
+  background:rgba(0,0,0,0.5);
+  border:none;
+  outline:none;
+  padding:0.85rem 1.2rem;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.78rem;
+  color:var(--green);
+  letter-spacing:0.08em;
+  caret-color:var(--green);
+}
+
+.signup-input::placeholder{
+  color:var(--green-dim);
+  opacity:0.7;
+}
+
+.signup-btn{
+  background:var(--green);
+  color:var(--bg);
+  border:none;
+  padding:0.85rem 1.5rem;
+  font-family:'Orbitron',monospace;
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+
+.signup-btn:hover{
+  background:#00cc33;
+  box-shadow:0 0 16px rgba(0,255,65,0.4);
+}
+
+.signup-privacy{
+  font-size:0.58rem;
+  color:var(--green-dim);
+  margin-top:0.8rem;
+  opacity:0.6;
+  letter-spacing:0.1em;
+}
+
 /* FOOTER */
 
 footer{
@@ -2498,16 +2616,29 @@ OFFICIAL PARTNERS
 </div>
 
 <div class="partners-icons">
+  <!-- PinkSale — official CDN logo -->
   <a href="https://pinksale.finance" target="_blank" class="partner-icon-btn">
-    <img class="partner-logo-img" src="https://www.pinksale.finance/assets/logo.png" alt="PinkSale">
+    <img class="partner-logo-img"
+      src="https://cdn.pinksale.finance/assets/pinksale-logo.png"
+      onerror="this.onerror=null;this.src='https://pinksale.finance/favicon.ico';"
+      alt="PinkSale">
     <span class="partner-name">PinkSale.finance</span>
   </a>
+  <!-- DexView — Google favicon service as reliable fallback -->
   <a href="https://dexview.com" target="_blank" class="partner-icon-btn">
-    <img class="partner-logo-img" src="https://dexview.com/favicon.ico" alt="DexView" style="border-radius:50%;">
+    <img class="partner-logo-img"
+      src="https://www.google.com/s2/favicons?sz=128&domain=dexview.com"
+      alt="DexView"
+      style="border-radius:50%;background:#111;">
     <span class="partner-name">DexView.com</span>
   </a>
+  <!-- Raydium — official GitHub hosted logo -->
   <a href="https://raydium.io" target="_blank" class="partner-icon-btn">
-    <img class="partner-logo-img" src="https://raydium.io/_next/image?url=%2Flogo.png&w=64&q=75" alt="Raydium">
+    <img class="partner-logo-img"
+      src="https://raw.githubusercontent.com/raydium-io/media-assets/master/logo/full-logo/full-logo-white.png"
+      onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?sz=128&domain=raydium.io';"
+      alt="Raydium"
+      style="background:#1a1a2e;border-radius:6px;padding:4px;">
     <span class="partner-name">Raydium.io</span>
   </a>
 </div>
@@ -2528,7 +2659,10 @@ OFFICIAL PARTNERS
 
 <div class="presale-hero">
   <a href="https://pinksale.finance" target="_blank" class="pinksale-badge">
-    <img class="pinksale-logo" src="https://www.pinksale.finance/assets/logo.png" alt="PinkSale">
+    <img class="pinksale-logo"
+      src="https://cdn.pinksale.finance/assets/pinksale-logo.png"
+      onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?sz=64&domain=pinksale.finance';"
+      alt="PinkSale">
     <span class="pinksale-badge-text">HOSTED ON PINKSALE.FINANCE</span>
   </a>
 </div>
@@ -2619,7 +2753,10 @@ OFFICIAL PARTNERS
 
 <div class="presale-cta-row">
   <a href="https://pinksale.finance" target="_blank" class="presale-cta-main">
-    <img src="https://www.pinksale.finance/assets/logo.png" style="width:20px;height:20px;object-fit:contain;border-radius:3px;">
+    <img
+      src="https://cdn.pinksale.finance/assets/pinksale-logo.png"
+      onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?sz=64&domain=pinksale.finance';"
+      style="width:20px;height:20px;object-fit:contain;border-radius:3px;">
     VIEW ON PINKSALE
   </a>
   <a href="https://twitter.com/robecosystem" target="_blank" class="presale-cta-secondary">
@@ -2824,6 +2961,16 @@ href="mailto:contact@robecosystem@gmail.com">
 
 </a>
 
+<a class="contact-card"
+href="https://github.com/robecosystem"
+target="_blank">
+
+<div class="contact-icon">
+<i class="fa-brands fa-github"></i>
+</div>
+
+</a>
+
 </div>
 
 <a href="https://solscan.io/token/YOUR_TOKEN_ADDRESS_HERE" target="_blank" class="solscan-link">
@@ -2831,6 +2978,40 @@ href="mailto:contact@robecosystem@gmail.com">
   VIEW ON SOLSCAN
 </a>
 
+</div>
+
+<!-- EMAIL SIGNUP -->
+
+<div class="signup-section">
+<div class="signup-inner">
+
+<div class="signup-label">NEWSLETTER — STAY IN THE LOOP</div>
+
+<div class="signup-title">GET $ROB UPDATES DIRECT TO YOUR INBOX</div>
+
+<div class="signup-desc">
+Presale alerts. Launch announcements. Staking drops. AI feature reveals.<br>
+Zero noise. Maximum signal. 100% ROBOTIC.
+</div>
+
+<div class="signup-form">
+  <input
+    class="signup-input"
+    type="email"
+    id="signup-email-input"
+    placeholder="YOUR_EMAIL@DOMAIN.COM"
+    autocomplete="email"
+  >
+  <button class="signup-btn" onclick="handleSignup()">
+    SUBSCRIBE
+  </button>
+</div>
+
+<div class="signup-privacy">
+// NO SPAM. UNSUBSCRIBE ANYTIME. ROBOTIC NEVER SELLS YOUR DATA. //
+</div>
+
+</div>
 </div>
 
 <!-- FOOTER -->
@@ -2900,6 +3081,24 @@ currentSlide = (currentSlide + 1) % slides.length;
 slides[currentSlide].classList.add('active');
 
 }, 2500);
+
+function handleSignup(){
+  const input = document.getElementById('signup-email-input');
+  const email = input ? input.value.trim() : '';
+  if(!email || !email.includes('@')){
+    input.style.borderLeft = '3px solid #ff0040';
+    input.placeholder = 'ENTER A VALID EMAIL ADDRESS';
+    setTimeout(()=>{
+      input.style.borderLeft = '';
+      input.placeholder = 'YOUR_EMAIL@DOMAIN.COM';
+    }, 2500);
+    return;
+  }
+  // Redirect to mailto with pre-filled subject so it opens the user's email client
+  const subject = encodeURIComponent('Subscribe — ROBOTIC $ROB Updates');
+  const body = encodeURIComponent('Please add me to the ROBOTIC mailing list.\n\nEmail: ' + email + '\n\n// Sent from robecosystem.github.io');
+  window.location.href = 'mailto:contact.robecosystem@gmail.com?subject=' + subject + '&body=' + body;
+}
 
 </script>
 
