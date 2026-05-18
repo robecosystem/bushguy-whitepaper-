@@ -3,801 +3,2170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROBOTIC — $ROB on Solana</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
-  :root {
-    --green: #00ff41;
-    --green-dim: #00a827;
-    --green-glow: rgba(0,255,65,0.4);
-    --red: #ff0040;
-    --amber: #ffb300;
-    --sol: #9945FF;
-    --sol-dim: #5c2899;
-    --sol-glow: rgba(153,69,255,0.4);
-    --bg: #010b01;
-    --panel: #050f05;
-    --border: #1a3a1a;
+
+:root{
+  --green:#00ff41;
+  --green-dim:#00a827;
+  --green-glow:rgba(0,255,65,0.4);
+  --red:#ff0040;
+  --amber:#ffb300;
+  --sol:#9945FF;
+  --sol-dim:#5c2899;
+  --bg:#010b01;
+  --panel:#050f05;
+  --border:#1a3a1a;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  font-family:'Share Tech Mono',monospace;
+  color:var(--green);
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.18) 2px,
+    rgba(0,0,0,0.18) 4px
+  );
+}
+
+/* SPLASH */
+
+#screen1{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:var(--bg);
+  z-index:500;
+  transition:opacity 0.8s ease,visibility 0.8s ease;
+}
+
+#screen1.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.splash-logo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:2px solid var(--green);
+  object-fit:cover;
+  margin-bottom:1.5rem;
+  box-shadow:0 0 30px var(--green-glow);
+  animation:pulse-glow 2s ease-in-out infinite alternate;
+}
+
+.splash-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(3.5rem,12vw,10rem);
+  font-weight:900;
+  letter-spacing:0.18em;
+  color:var(--green);
+  text-shadow:
+    0 0 20px var(--green),
+    0 0 60px var(--green-glow),
+    0 0 120px rgba(0,255,65,0.2);
+  animation:flicker 4s infinite,pulse-glow 2s ease-in-out infinite alternate;
+  position:relative;
+}
+
+.splash-title::after{
+  content:'_';
+  animation:blink 0.8s step-end infinite;
+}
+
+.splash-chain{
+  font-size:0.75rem;
+  color:var(--sol);
+  letter-spacing:0.35em;
+  margin-top:0.5rem;
+  margin-bottom:1.5rem;
+}
+
+.loading-bar-wrap{
+  width:220px;
+  height:2px;
+  background:var(--border);
+  margin-top:1rem;
+}
+
+.loading-bar{
+  height:100%;
+  width:0%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+  animation:load 2.2s ease forwards;
+}
+
+@keyframes load{
+  to{width:100%;}
+}
+
+@keyframes blink{
+  50%{opacity:0;}
+}
+
+@keyframes flicker{
+  0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}
+  20%,24%,55%{opacity:0.4;}
+}
+
+@keyframes pulse-glow{
+  from{
+    text-shadow:
+      0 0 20px var(--green),
+      0 0 60px var(--green-glow);
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg);font-family:'Share Tech Mono',monospace;color:var(--green);overflow-x:hidden;cursor:crosshair;}
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px);}
-
-  /* SPLASH */
-  #screen1{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);z-index:500;transition:opacity 0.8s ease,visibility 0.8s ease;}
-  #screen1.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-  .splash-logo{width:90px;height:90px;border-radius:50%;border:2px solid var(--green);object-fit:cover;margin-bottom:1.5rem;box-shadow:0 0 30px var(--green-glow);animation:pulse-glow 2s ease-in-out infinite alternate;}
-  .splash-title{font-family:'Orbitron',sans-serif;font-size:clamp(3.5rem,12vw,10rem);font-weight:900;letter-spacing:0.18em;color:var(--green);text-shadow:0 0 20px var(--green),0 0 60px var(--green-glow),0 0 120px rgba(0,255,65,0.2);animation:flicker 4s infinite,pulse-glow 2s ease-in-out infinite alternate;position:relative;}
-  .splash-title::after{content:'_';animation:blink 0.8s step-end infinite;}
-  .splash-chain{font-size:0.75rem;color:var(--sol);letter-spacing:0.35em;margin-top:0.5rem;margin-bottom:1.5rem;}
-  @keyframes blink{50%{opacity:0;}}
-  @keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1;}20%,24%,55%{opacity:0.4;}}
-  @keyframes pulse-glow{from{text-shadow:0 0 20px var(--green),0 0 60px var(--green-glow);}to{text-shadow:0 0 40px var(--green),0 0 100px var(--green-glow),0 0 200px rgba(0,255,65,0.1);}}
-  .loading-bar-wrap{width:220px;height:2px;background:var(--border);margin-top:1rem;}
-  .loading-bar{height:100%;width:0%;background:var(--green);box-shadow:0 0 8px var(--green);animation:load 2.2s ease forwards;}
-  @keyframes load{to{width:100%;}}
-  .splash-btns{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;justify-content:center;}
-  .enter-btn{background:transparent;border:2px solid var(--green);color:var(--green);font-family:'Share Tech Mono',monospace;font-size:1rem;letter-spacing:0.3em;padding:0.75rem 2.5rem;cursor:pointer;text-transform:uppercase;transition:all 0.2s;animation:border-pulse 1.5s ease-in-out infinite alternate;}
-  .enter-btn:hover{background:var(--green);color:var(--bg);box-shadow:0 0 30px var(--green);}
-  .launch-btn-splash{background:transparent;border:2px solid var(--sol);color:var(--sol);font-family:'Share Tech Mono',monospace;font-size:1rem;letter-spacing:0.3em;padding:0.75rem 2.5rem;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
-  .launch-btn-splash:hover{background:var(--sol);color:#fff;box-shadow:0 0 30px var(--sol-glow);}
-  @keyframes border-pulse{from{box-shadow:0 0 8px var(--green-glow),inset 0 0 8px rgba(0,255,65,0.05);}to{box-shadow:0 0 20px var(--green),inset 0 0 20px rgba(0,255,65,0.1);}}
-
-  /* MAIN */
-  #screen2{display:none;min-height:100vh;}
-  #screen2.visible{display:block;}
-
-  header{border-bottom:1px solid var(--border);padding:0.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(1,11,1,0.97);backdrop-filter:blur(4px);z-index:100;gap:1rem;flex-wrap:wrap;}
-  .logo{font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:0.2em;text-shadow:0 0 14px var(--green-glow);display:flex;align-items:center;gap:0.6rem;}
-  .logo-img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid var(--green);box-shadow:0 0 8px var(--green-glow);}
-  .header-right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-  .status-bar{font-size:0.65rem;color:var(--green-dim);text-align:right;line-height:1.6;}
-  .status-bar span{color:var(--green);}
-  .status-bar .sol-s{color:var(--sol);}
-  .launch-app-btn{background:transparent;border:1px solid var(--sol);color:var(--sol);font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;padding:0.45rem 1.1rem;cursor:pointer;text-transform:uppercase;transition:all 0.2s;white-space:nowrap;}
-  .launch-app-btn:hover{background:var(--sol);color:#fff;box-shadow:0 0 18px var(--sol-glow);}
-
-  nav{display:flex;gap:0;border-bottom:1px solid var(--border);overflow-x:auto;}
-  nav a{text-decoration:none;color:var(--green-dim);font-size:0.65rem;letter-spacing:0.2em;padding:0.7rem 1.2rem;border-right:1px solid var(--border);text-transform:uppercase;transition:all 0.2s;white-space:nowrap;}
-  nav a:hover{color:var(--green);background:rgba(0,255,65,0.06);}
-
-  .ticker-wrap{overflow:hidden;border-bottom:1px solid var(--border);background:rgba(0,255,65,0.03);padding:0.4rem 0;}
-  .ticker{display:flex;white-space:nowrap;animation:ticker 35s linear infinite;font-size:0.7rem;color:var(--green-dim);letter-spacing:0.15em;}
-  .ticker span{padding:0 2rem;}
-  .ticker .hl{color:var(--green);}
-  .ticker .shl{color:var(--sol);}
-  @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-  /* PANELS */
-  .panel{border:1px solid var(--border);padding:2rem;position:relative;overflow:hidden;}
-  .panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(0,255,65,0.04) 0%,transparent 60%);pointer-events:none;}
-  .panel-label{font-size:0.65rem;letter-spacing:0.3em;color:var(--green-dim);margin-bottom:1.5rem;text-transform:uppercase;}
-  .panel-label::before{content:'// ';}
-
-  .site-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-
-  /* ROBOT */
-  .robot-panel{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--panel);min-height:560px;}
-  .robot-wrap{position:relative;width:260px;animation:robot-float 3s ease-in-out infinite;}
-  @keyframes robot-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
-  .robot-svg{width:100%;}
-  .eye{animation:eye-blink 4s step-end infinite;}
-  @keyframes eye-blink{0%,94%,100%{transform:scaleY(1);}96%,98%{transform:scaleY(0.05);}}
-  .antenna-light{animation:ant-blink 1.2s ease-in-out infinite alternate;}
-  @keyframes ant-blink{from{fill:#ff0040;filter:drop-shadow(0 0 4px #ff0040);}to{fill:#ffb300;filter:drop-shadow(0 0 8px #ffb300);}}
-  .robot-caption{margin-top:1.5rem;font-family:'VT323',monospace;font-size:1.4rem;color:var(--green);text-align:center;letter-spacing:0.12em;}
-
-  /* MEME */
-  .meme-panel{grid-column:2;grid-row:1;background:#020802;}
-  .meme-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,2.5vw,2.2rem);font-weight:900;line-height:1.1;margin-bottom:1rem;text-shadow:0 0 20px var(--green-glow);}
-  .meme-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
-  .meme-card{background:rgba(0,255,65,0.04);border:1px solid var(--border);border-radius:2px;padding:1rem;position:relative;transition:all 0.2s;cursor:pointer;}
-  .meme-card:hover{border-color:var(--green);background:rgba(0,255,65,0.08);transform:translateY(-2px);box-shadow:0 0 16px var(--green-glow);}
-  .meme-card-icon{font-size:2rem;display:block;margin-bottom:0.5rem;}
-  .meme-card-text{font-family:'VT323',monospace;font-size:1.1rem;color:var(--green);line-height:1.3;}
-  .meme-card-sub{font-size:0.65rem;color:var(--green-dim);margin-top:0.4rem;letter-spacing:0.1em;}
-  .corner-tag{position:absolute;top:6px;right:8px;font-size:0.55rem;color:var(--amber);letter-spacing:0.2em;}
-
-  /* PHONE */
-  .phone-panel{grid-column:2;grid-row:2;background:#010901;display:flex;gap:2rem;align-items:flex-start;}
-  .phone-wrap{flex-shrink:0;animation:phone-tilt 4s ease-in-out infinite;}
-  @keyframes phone-tilt{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
-  .phone-svg{width:110px;}
-  .phone-info{flex:1;}
-  .phone-info h3{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.8rem;letter-spacing:0.1em;}
-  .spec-list{list-style:none;font-size:0.75rem;line-height:2;color:var(--green-dim);}
-  .spec-list li::before{content:'▸ ';color:var(--green);}
-  .spec-list li span{color:var(--green);}
-  .spec-list li a{color:var(--sol);text-decoration:none;transition:color 0.2s;}
-  .spec-list li a:hover{color:var(--green);text-decoration:underline;}
-  .lock-badge{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(153,69,255,0.1);border:1px solid var(--sol-dim);color:var(--sol);font-size:0.65rem;padding:0.3rem 0.7rem;letter-spacing:0.15em;margin-top:0.5rem;}
-  .action-btn{display:inline-block;margin-top:1rem;background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;padding:0.5rem 1.2rem;cursor:pointer;text-transform:uppercase;transition:all 0.2s;text-decoration:none;}
-  .action-btn:hover{background:var(--green);color:var(--bg);box-shadow:0 0 18px var(--green);}
-
-  /* SECTION HEADS */
-  .section-head{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;gap:1rem;background:rgba(0,255,65,0.02);}
-  .section-head h2{font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.25em;color:var(--green);white-space:nowrap;}
-  .section-head .line{flex:1;height:1px;background:var(--border);}
-
-  /* TOKENOMICS */
-  .token-section{padding:2.5rem 2rem;background:#010901;border-bottom:1px solid var(--border);}
-  .token-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .token-card{border:1px solid var(--border);padding:1.5rem 1rem;text-align:center;position:relative;transition:border-color 0.3s;}
-  .token-card:hover{border-color:var(--sol);}
-  .token-card-val{font-family:'Orbitron',sans-serif;font-size:clamp(0.9rem,1.8vw,1.4rem);font-weight:900;color:var(--sol);text-shadow:0 0 12px var(--sol-glow);margin-bottom:0.5rem;word-break:break-all;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
-  .token-logo-tiny{width:20px;height:20px;border-radius:50%;object-fit:cover;border:1px solid var(--sol);}
-  .token-card-label{font-size:0.65rem;letter-spacing:0.25em;color:var(--green-dim);text-transform:uppercase;}
-  .token-card-icon{font-size:1.8rem;margin-bottom:0.8rem;display:block;}
-
-  /* PIE CHART */
-  .chart-wrap{margin-top:2rem;display:flex;flex-wrap:wrap;gap:2rem;align-items:center;}
-  .pie-container{position:relative;width:200px;height:200px;flex-shrink:0;}
-  .pie-svg{width:200px;height:200px;transform:rotate(-90deg);}
-  .pie-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-  .pie-center-sym{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--green);}
-  .pie-center-label{font-size:0.6rem;color:var(--green-dim);letter-spacing:0.1em;}
-  .pie-legend{display:flex;flex-direction:column;gap:0.8rem;flex:1;}
-  .legend-item{display:flex;align-items:center;gap:0.8rem;font-size:0.72rem;color:var(--green-dim);}
-  .legend-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0;}
-  .legend-pct{font-family:'Orbitron',sans-serif;font-size:0.8rem;color:var(--green);}
-
-  .supply-bar-wrap{margin-top:2rem;border:1px solid var(--border);padding:1.5rem;}
-  .supply-bar-label{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--green-dim);margin-bottom:0.8rem;flex-wrap:wrap;gap:0.5rem;}
-  .supply-bar-label .sv{color:var(--sol);font-family:'Orbitron',sans-serif;font-size:0.8rem;}
-  .supply-bar-track{height:28px;background:#010b01;border:1px solid var(--border);position:relative;overflow:hidden;}
-  .supply-bar-fill{position:absolute;inset:0;width:100%;background:linear-gradient(90deg,#9945FF,#c583ff);animation:bar-shimmer 2s ease-in-out infinite alternate;display:flex;align-items:center;justify-content:center;}
-  @keyframes bar-shimmer{from{filter:brightness(1);}to{filter:brightness(1.3);}}
-  .supply-bar-text{font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:900;color:#fff;letter-spacing:0.15em;}
-  .sol-link{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:1rem 1.5rem;border:1px solid var(--sol-dim);background:rgba(153,69,255,0.05);text-decoration:none;color:var(--sol);font-size:0.75rem;letter-spacing:0.1em;transition:all 0.2s;}
-  .sol-link:hover{background:rgba(153,69,255,0.12);border-color:var(--sol);box-shadow:0 0 16px rgba(153,69,255,0.3);}
-  .sol-badge{background:var(--sol);color:#fff;font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:900;padding:0.2rem 0.6rem;letter-spacing:0.1em;flex-shrink:0;}
-
-  /* AI SECTION */
-  .ai-section{padding:2.5rem 2rem;background:#010b01;border-bottom:1px solid var(--border);}
-  .ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .ai-block{border:1px solid var(--border);padding:1.5rem;position:relative;transition:border-color 0.3s;}
-  .ai-block:hover{border-color:var(--green);}
-  .ai-num{font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;color:rgba(0,255,65,0.08);position:absolute;top:0.5rem;right:1rem;line-height:1;}
-  .ai-block h4{font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.15em;margin-bottom:0.8rem;color:var(--green);}
-  .ai-block p{font-size:0.74rem;line-height:1.9;color:rgba(0,255,65,0.65);}
-  .ai-tag{display:inline-block;margin-top:0.8rem;background:rgba(0,255,65,0.07);border:1px solid var(--border);font-size:0.58rem;color:var(--green-dim);padding:0.2rem 0.6rem;letter-spacing:0.15em;}
-
-  /* STAKING */
-  .stake-section{padding:2.5rem 2rem;background:#010a08;border-bottom:1px solid var(--border);}
-  .stake-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .stake-card{border:1px solid var(--border);padding:1.5rem;text-align:center;transition:all 0.3s;position:relative;overflow:hidden;}
-  .stake-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at bottom,rgba(153,69,255,0.06) 0%,transparent 70%);pointer-events:none;}
-  .stake-card:hover{border-color:var(--sol);transform:translateY(-4px);box-shadow:0 0 20px var(--sol-glow);}
-  .stake-pct{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;color:var(--sol);text-shadow:0 0 16px var(--sol-glow);margin-bottom:0.3rem;}
-  .stake-pct sub{font-size:0.9rem;}
-  .stake-label{font-size:0.65rem;letter-spacing:0.2em;color:var(--green-dim);text-transform:uppercase;margin-bottom:0.8rem;}
-  .stake-desc{font-size:0.72rem;color:rgba(0,255,65,0.6);line-height:1.7;}
-  .tba-badge{display:inline-block;background:rgba(255,179,0,0.12);border:1px solid var(--amber);color:var(--amber);font-size:0.6rem;padding:0.2rem 0.6rem;letter-spacing:0.2em;margin-top:0.6rem;}
-
-  /* PARTNERS */
-  .partner-section{padding:2.5rem 2rem;background:#010901;border-bottom:1px solid var(--border);}
-  .partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .partner-card{border:1px solid var(--border);padding:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;gap:0.7rem;transition:all 0.25s;background:rgba(0,255,65,0.02);min-height:120px;}
-  .partner-card:hover{border-color:var(--green);background:rgba(0,255,65,0.07);transform:translateY(-3px);box-shadow:0 0 18px var(--green-glow);}
-  .partner-card-logo{font-size:2rem;}
-  .partner-card-name{font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.15em;color:var(--green);}
-  .partner-card-url{font-size:0.6rem;color:var(--green-dim);letter-spacing:0.1em;}
-
-  /* PRODUCT */
-  .product-section{padding:2.5rem 2rem;background:#010b01;border-bottom:1px solid var(--border);}
-  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .product-card{border:1px solid var(--border);padding:1.5rem;position:relative;transition:border-color 0.3s;}
-  .product-card:hover{border-color:var(--green);}
-  .product-card h4{font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.15em;margin-bottom:0.8rem;color:var(--green);}
-  .product-card p{font-size:0.74rem;line-height:1.9;color:rgba(0,255,65,0.65);}
-  .ad-card{border:2px dashed var(--sol-dim);background:rgba(153,69,255,0.04);cursor:pointer;transition:all 0.25s;}
-  .ad-card:hover{border-color:var(--sol);background:rgba(153,69,255,0.09);box-shadow:0 0 20px var(--sol-glow);}
-  .ad-card h4{color:var(--sol);}
-  .ad-label{font-size:0.6rem;letter-spacing:0.25em;color:var(--sol-dim);text-transform:uppercase;margin-bottom:0.5rem;}
-
-  /* SCREENSHOT / SHARE */
-  .buy-section{padding:3rem 2rem;background:#000d00;border-bottom:1px solid var(--border);text-align:center;position:relative;overflow:hidden;}
-  .buy-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,255,65,0.06) 0%,transparent 70%);pointer-events:none;}
-  .buy-section h2{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:900;letter-spacing:0.1em;margin-bottom:0.5rem;text-shadow:0 0 30px var(--green-glow);animation:pulse-glow 2s ease-in-out infinite alternate;}
-  .buy-section .subtitle{font-size:0.8rem;color:var(--green-dim);letter-spacing:0.2em;margin-bottom:2.5rem;}
-  .buy-steps{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:2.5rem;}
-  .buy-step{border:1px solid var(--border);padding:1.5rem 1.5rem;min-width:160px;flex:1;max-width:210px;position:relative;background:rgba(0,255,65,0.03);transition:all 0.25s;}
-  .buy-step:hover{border-color:var(--green);background:rgba(0,255,65,0.07);transform:translateY(-4px);}
-  .buy-step-num{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;color:rgba(0,255,65,0.12);margin-bottom:0.4rem;}
-  .buy-step-icon{font-size:2rem;margin-bottom:0.6rem;display:block;}
-  .buy-step h4{font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;margin-bottom:0.5rem;color:var(--green);}
-  .buy-step p{font-size:0.68rem;color:var(--green-dim);line-height:1.7;}
-  .step-arrow{display:flex;align-items:center;color:var(--green-dim);font-size:1.5rem;padding:0 0.4rem;align-self:center;}
-  .share-cta{display:inline-flex;align-items:center;gap:0.8rem;background:var(--green);color:var(--bg);font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.15em;padding:1rem 2.5rem;cursor:pointer;text-transform:uppercase;border:none;text-decoration:none;animation:cta-pulse 2s ease-in-out infinite;transition:all 0.2s;}
-  .share-cta:hover{background:#fff;}
-  @keyframes cta-pulse{0%,100%{box-shadow:0 0 20px var(--green-glow);}50%{box-shadow:0 0 50px var(--green),0 0 80px var(--green-glow);}}
-  .meme-flow-tags{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;}
-  .meme-flow-tag{border:1px solid var(--border);font-size:0.68rem;color:var(--green-dim);padding:0.35rem 0.9rem;letter-spacing:0.15em;transition:all 0.2s;cursor:default;}
-  .meme-flow-tag:hover{border-color:var(--green);color:var(--green);}
-  .x-post-cta{margin-top:1.5rem;display:inline-flex;align-items:center;gap:0.7rem;border:1px solid #1da1f2;color:#1da1f2;font-size:0.72rem;letter-spacing:0.15em;padding:0.6rem 1.5rem;text-decoration:none;transition:all 0.2s;font-family:'Share Tech Mono',monospace;}
-  .x-post-cta:hover{background:rgba(29,161,242,0.12);box-shadow:0 0 14px rgba(29,161,242,0.3);}
-
-  /* EMAIL SIGNUP */
-  .email-section{padding:2.5rem 2rem;background:#010601;border-bottom:1px solid var(--border);text-align:center;}
-  .email-section h3{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.2em;margin-bottom:0.5rem;}
-  .email-section p{font-size:0.72rem;color:var(--green-dim);letter-spacing:0.1em;margin-bottom:1.5rem;}
-  .email-form{display:flex;gap:0;justify-content:center;max-width:480px;margin:0 auto;flex-wrap:wrap;gap:0.5rem;}
-  .email-input{flex:1;min-width:200px;background:rgba(0,255,65,0.04);border:1px solid var(--border);color:var(--green);font-family:'Share Tech Mono',monospace;font-size:0.8rem;padding:0.65rem 1rem;outline:none;letter-spacing:0.08em;transition:border-color 0.2s;}
-  .email-input:focus{border-color:var(--green);}
-  .email-input::placeholder{color:var(--green-dim);}
-  .email-submit{background:transparent;border:1px solid var(--green);color:var(--green);font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;padding:0.65rem 1.5rem;cursor:pointer;text-transform:uppercase;transition:all 0.2s;white-space:nowrap;}
-  .email-submit:hover{background:var(--green);color:var(--bg);box-shadow:0 0 18px var(--green);}
-
-  /* CONTACTS */
-  .contact-section{padding:2.5rem 2rem;background:#010601;border-bottom:1px solid var(--border);}
-  .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:1.5rem;}
-  .contact-card{border:1px solid var(--border);padding:1.5rem;display:flex;align-items:center;gap:1.2rem;text-decoration:none;transition:all 0.2s;background:rgba(0,255,65,0.02);}
-  .contact-card:hover{border-color:var(--green);background:rgba(0,255,65,0.07);transform:translateX(4px);box-shadow:0 0 16px var(--green-glow);}
-  .contact-icon{width:48px;height:48px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.5rem;transition:border-color 0.2s;}
-  .contact-card:hover .contact-icon{border-color:var(--green);}
-  .contact-info{flex:1;}
-  .contact-info h4{font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.15em;color:var(--green);margin-bottom:0.3rem;}
-  .contact-info p{font-size:0.7rem;color:var(--green-dim);word-break:break-all;}
-  .contact-arrow{color:var(--green-dim);font-size:1.2rem;}
-
-  footer{border-top:1px solid var(--border);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;font-size:0.65rem;color:var(--green-dim);flex-wrap:wrap;gap:0.5rem;}
-  footer span{color:var(--green);}
-  .footer-links{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-  .footer-links a{text-decoration:none;color:var(--green-dim);display:flex;align-items:center;gap:0.4rem;transition:color 0.2s;}
-  .footer-links a:hover{color:var(--green);}
-  .footer-links .sep{color:var(--border);}
-
-  /* RESPONSIVE */
-  @media(max-width:900px){
-    .site-grid{grid-template-columns:1fr;}
-    .robot-panel{grid-column:1;grid-row:1;min-height:380px;}
-    .meme-panel{grid-column:1;grid-row:2;}
-    .phone-panel{grid-column:1;grid-row:3;}
-    .ai-grid,.stake-grid,.partner-grid,.product-grid{grid-template-columns:1fr 1fr;}
-    .token-grid{grid-template-columns:1fr 1fr;}
-    .contact-grid{grid-template-columns:1fr;}
-    .buy-steps{flex-direction:column;align-items:center;}
-    .step-arrow{transform:rotate(90deg);}
-    .chart-wrap{justify-content:center;}
+  to{
+    text-shadow:
+      0 0 40px var(--green),
+      0 0 100px var(--green-glow),
+      0 0 200px rgba(0,255,65,0.1);
   }
-  @media(max-width:560px){
-    .ai-grid,.stake-grid,.partner-grid,.product-grid,.token-grid{grid-template-columns:1fr;}
-    header{padding:0.7rem 1rem;}
-    .panel{padding:1.2rem;}
-    .token-section,.ai-section,.stake-section,.partner-section,.product-section,.buy-section,.contact-section,.email-section{padding:1.5rem 1rem;}
-    .meme-cards{grid-template-columns:1fr;}
-    nav a{font-size:0.6rem;padding:0.6rem 0.8rem;}
-    .header-right{gap:0.5rem;}
-    .status-bar{font-size:0.58rem;}
-  }
+}
+
+/* Robot animation */
+@keyframes robot-float{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-12px);}
+}
+
+@keyframes robot-eye-blink{
+  0%,90%,100%{transform:scaleY(1);}
+  95%{transform:scaleY(0.08);}
+}
+
+@keyframes scan-line{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100%);}
+}
+
+@keyframes circuit-pulse{
+  0%,100%{opacity:0.3;}
+  50%{opacity:1;}
+}
+
+@keyframes antenna-pulse{
+  0%,100%{r:8;opacity:1;}
+  50%{r:14;opacity:0.5;}
+}
+
+@keyframes chest-core{
+  0%,100%{opacity:0.4;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.15);}
+}
+
+@keyframes data-stream{
+  0%{stroke-dashoffset:200;}
+  100%{stroke-dashoffset:0;}
+}
+
+#screen2{
+  display:none;
+  min-height:100vh;
+}
+
+#screen2.visible{
+  display:block;
+}
+
+/* HEADER */
+
+header{
+  border-bottom:1px solid var(--border);
+  padding:0.9rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  background:rgba(1,11,1,0.97);
+  backdrop-filter:blur(4px);
+  z-index:100;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.3rem;
+  font-weight:900;
+  letter-spacing:0.2em;
+  text-shadow:0 0 14px var(--green-glow);
+}
+
+.logo a{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  text-decoration:none;
+  color:inherit;
+}
+
+.logo-img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid var(--green);
+  box-shadow:0 0 8px var(--green-glow);
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+/* LAUNCH BUTTON — redesigned to match site aesthetic */
+.launch-btn{
+  position:relative;
+  background:transparent;
+  color:var(--green);
+  border:1px solid var(--green);
+  padding:0.7rem 1.4rem;
+  font-family:'Orbitron', monospace;
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.2em;
+  border-radius:0;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  text-transform:uppercase;
+  overflow:hidden;
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.launch-btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--green);
+  transform:translateX(-100%);
+  transition:transform 0.25s ease;
+  z-index:0;
+}
+
+.launch-btn::after{
+  content:'▶ LAUNCH APP';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--bg);
+  font-family:'Orbitron',monospace;
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.2em;
+  opacity:0;
+  transition:opacity 0.25s ease;
+  z-index:1;
+}
+
+.launch-btn:hover::before{
+  transform:translateX(0);
+}
+
+.launch-btn:hover::after{
+  opacity:1;
+}
+
+.launch-btn:hover{
+  box-shadow:0 0 20px var(--green-glow), 0 0 40px rgba(0,255,65,0.2);
+  color:transparent;
+}
+
+.launch-btn span{
+  position:relative;
+  z-index:1;
+}
+
+.status-bar{
+  font-size:0.65rem;
+  color:var(--green-dim);
+  text-align:right;
+  line-height:1.6;
+}
+
+.status-bar span{
+  color:var(--green);
+}
+
+.status-bar .sol-s{
+  color:var(--sol);
+}
+
+/* NAV */
+
+nav{
+  display:flex;
+  gap:0;
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+}
+
+nav a{
+  text-decoration:none;
+  color:var(--green-dim);
+  font-size:0.65rem;
+  letter-spacing:0.2em;
+  padding:0.7rem 1.2rem;
+  border-right:1px solid var(--border);
+  text-transform:uppercase;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+
+nav a:hover{
+  color:var(--green);
+  background:rgba(0,255,65,0.06);
+}
+
+/* GRID */
+
+.site-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+.panel{
+  border:1px solid var(--border);
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+
+.panel-label{
+  font-size:0.65rem;
+  letter-spacing:0.3em;
+  color:var(--green-dim);
+  margin-bottom:1.5rem;
+  text-transform:uppercase;
+}
+
+.panel-label::before{
+  content:'// ';
+}
+
+/* ROBOT PANEL */
+
+.robot-panel{
+  grid-column:1;
+  grid-row:1/3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:var(--panel);
+  min-height:560px;
+}
+
+.robot-wrap{
+  position:relative;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.full-robot-svg{
+  width:100%;
+  max-width:520px;
+  filter: drop-shadow(0 0 18px rgba(0,255,65,0.6)) drop-shadow(0 0 40px rgba(0,255,65,0.25)) brightness(1.05);
+  animation: robot-float 4s ease-in-out infinite;
+}
+
+.robot-caption{
+  margin-top:1.5rem;
+  font-family:'VT323',monospace;
+  font-size:1.4rem;
+  color:var(--green);
+  text-align:center;
+  letter-spacing:0.12em;
+}
+
+/* MEME */
+
+.meme-panel{
+  grid-column:2;
+  grid-row:1;
+  background:#020802;
+}
+
+.meme-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.4rem,2.5vw,2.2rem);
+  font-weight:900;
+  line-height:1.1;
+  margin-bottom:1rem;
+}
+
+.meme-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  margin-top:1rem;
+}
+
+.meme-card{
+  background:rgba(0,255,65,0.04);
+  border:1px solid var(--border);
+  padding:1rem;
+}
+
+.meme-card-icon{
+  font-size:2rem;
+  display:block;
+  margin-bottom:0.5rem;
+}
+
+/* PHONE */
+
+.phone-panel{
+  grid-column:2;
+  grid-row:2;
+  background:#010901;
+  display:flex;
+  gap:2rem;
+  align-items:flex-start;
+}
+
+.phone-wrap{
+  position:relative;
+  width:130px;
+  height:220px;
+}
+
+.phone-svg{
+  width:130px;
+  position:relative;
+  z-index:1;
+}
+
+.phone-screen{
+  position:absolute;
+  top:16px;
+  left:14px;
+  width:102px;
+  height:184px;
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  z-index:2;
+  border:1px solid rgba(0,255,65,0.35);
+  box-shadow:
+    inset 0 0 15px rgba(0,255,65,0.3),
+    0 0 12px rgba(0,255,65,0.15);
+}
+
+.phone-carousel{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.carousel-img{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.carousel-img.active{
+  opacity:1;
+}
+
+.phone-console{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:0.45rem;
+  background:rgba(0,0,0,0.82);
+  backdrop-filter:blur(2px);
+  border-top:1px solid rgba(0,255,65,0.3);
+  font-family:'VT323', monospace;
+  font-size:0.58rem;
+  line-height:1.3;
+  color:#00ff41;
+}
+
+.phone-info{
+  flex:1;
+}
+
+.phone-info h3{
+  font-family:'Orbitron',sans-serif;
+  font-size:1rem;
+  margin-bottom:0.8rem;
+}
+
+.spec-list{
+  list-style:none;
+  font-size:0.75rem;
+  line-height:2;
+}
+
+.spec-list li::before{
+  content:'▸ ';
+  color:var(--green);
+}
+
+.spec-list li a{
+  color:var(--sol);
+  text-decoration:none;
+}
+
+.lock-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  background:rgba(153,69,255,0.1);
+  border:1px solid var(--sol-dim);
+  color:var(--sol);
+  font-size:0.65rem;
+  padding:0.3rem 0.7rem;
+  margin-top:0.8rem;
+}
+
+/* SECTION HEAD */
+
+.section-head{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  background:rgba(0,255,65,0.02);
+}
+
+.section-head h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.8rem;
+  letter-spacing:0.25em;
+}
+
+.section-head .line{
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+
+/* TOKEN */
+
+.token-section,
+.buy-section,
+.contact-section{
+  padding:2.5rem 2rem;
+}
+
+.token-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  margin-top:1.5rem;
+}
+
+.token-card{
+  border:1px solid var(--border);
+  padding:1.5rem 1rem;
+  text-align:center;
+}
+
+.token-card-icon{
+  font-size:1.8rem;
+  margin-bottom:0.8rem;
+  display:block;
+}
+
+.token-card-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.3rem;
+  color:var(--sol);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.4rem;
+}
+
+.token-card-val a{
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  text-decoration:none;
+  color:inherit;
+}
+
+.token-logo-tiny{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid var(--sol);
+}
+
+/* TOKENOMICS CHART */
+.tokenomics-chart-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3rem;
+  margin-top:2.5rem;
+  flex-wrap:wrap;
+  padding:2rem;
+  border:1px solid var(--border);
+  background:rgba(0,255,65,0.02);
+  position:relative;
+}
+
+.tokenomics-chart-wrap::before{
+  content:'// ALLOCATION BREAKDOWN';
+  position:absolute;
+  top:-0.6rem;
+  left:1.5rem;
+  background:var(--bg);
+  padding:0 0.5rem;
+  font-size:0.6rem;
+  letter-spacing:0.25em;
+  color:var(--green-dim);
+}
+
+.donut-container{
+  position:relative;
+  width:200px;
+  height:200px;
+  flex-shrink:0;
+}
+
+.donut-svg{
+  width:200px;
+  height:200px;
+  transform:rotate(-90deg);
+  filter:drop-shadow(0 0 16px rgba(0,255,65,0.35));
+}
+
+.donut-center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.donut-center-label{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.6rem;
+  color:var(--green-dim);
+  letter-spacing:0.15em;
+}
+
+.donut-center-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.4rem;
+  font-weight:900;
+  color:var(--green);
+  text-shadow:0 0 12px var(--green-glow);
+  line-height:1;
+  margin-top:0.2rem;
+}
+
+.donut-center-sym{
+  font-size:0.65rem;
+  color:var(--sol);
+  letter-spacing:0.2em;
+}
+
+.chart-legend{
+  display:flex;
+  flex-direction:column;
+  gap:1.2rem;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  cursor:pointer;
+  transition:opacity 0.2s;
+}
+
+.legend-item:hover{
+  opacity:0.8;
+}
+
+.legend-dot{
+  width:14px;
+  height:14px;
+  border-radius:2px;
+  flex-shrink:0;
+  position:relative;
+}
+
+.legend-dot::after{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border-radius:3px;
+  opacity:0.3;
+}
+
+.legend-dot.presale{
+  background:#00ff41;
+  box-shadow:0 0 8px rgba(0,255,65,0.6);
+}
+.legend-dot.presale::after{background:#00ff41;}
+
+.legend-dot.liquidity{
+  background:#9945FF;
+  box-shadow:0 0 8px rgba(153,69,255,0.6);
+}
+.legend-dot.liquidity::after{background:#9945FF;}
+
+.legend-dot.marketing{
+  background:#ffb300;
+  box-shadow:0 0 8px rgba(255,179,0,0.6);
+}
+.legend-dot.marketing::after{background:#ffb300;}
+
+.legend-info{}
+
+.legend-pct{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem;
+  font-weight:700;
+  line-height:1;
+}
+
+.legend-pct.presale{color:#00ff41;}
+.legend-pct.liquidity{color:#9945FF;}
+.legend-pct.marketing{color:#ffb300;}
+
+.legend-name{
+  font-size:0.65rem;
+  color:var(--green-dim);
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  margin-top:0.15rem;
+}
+
+/* ABOUT SECTION */
+
+.about-section{
+  padding:3rem 2rem;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:rgba(0,255,65,0.015);
+  position:relative;
+  overflow:hidden;
+}
+
+.about-section::after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:320px;
+  height:100%;
+  background:radial-gradient(ellipse at top right, rgba(153,69,255,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2.5rem;
+  margin-top:2rem;
+}
+
+.about-block{
+  border:1px solid var(--border);
+  padding:1.8rem;
+  position:relative;
+  background:rgba(0,0,0,0.3);
+}
+
+.about-block::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:3px;
+  height:100%;
+}
+
+.about-block.robot-block::before{
+  background:linear-gradient(to bottom, #00ff41, transparent);
+}
+
+.about-block.ai-block::before{
+  background:linear-gradient(to bottom, #9945FF, transparent);
+}
+
+.about-block-icon{
+  font-size:2.2rem;
+  margin-bottom:1rem;
+  display:block;
+}
+
+.about-block-icon.ai-icon{
+  color:var(--sol);
+  text-shadow:0 0 12px rgba(153,69,255,0.6);
+}
+
+.about-block-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:0.18em;
+  margin-bottom:1rem;
+  padding-bottom:0.6rem;
+  border-bottom:1px solid var(--border);
+}
+
+.about-block-title.ai-title{
+  color:var(--sol);
+  text-shadow:0 0 8px rgba(153,69,255,0.4);
+}
+
+.about-text{
+  font-size:0.75rem;
+  line-height:2;
+  color:#7abf7a;
+}
+
+.about-text p{
+  margin-bottom:0.8rem;
+}
+
+.about-text p:last-child{
+  margin-bottom:0;
+}
+
+.about-highlight{
+  color:var(--green);
+  font-weight:bold;
+}
+
+.about-highlight-sol{
+  color:var(--sol);
+}
+
+.about-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.8rem;
+  margin-top:1.2rem;
+}
+
+.about-stat{
+  background:rgba(0,255,65,0.04);
+  border:1px solid var(--border);
+  padding:0.7rem;
+  text-align:center;
+}
+
+.about-stat-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.9rem;
+  color:var(--green);
+  display:block;
+  text-shadow:0 0 8px var(--green-glow);
+}
+
+.about-stat-label{
+  font-size:0.55rem;
+  letter-spacing:0.18em;
+  color:var(--green-dim);
+  text-transform:uppercase;
+  margin-top:0.2rem;
+  display:block;
+}
+
+.about-stat-sol .about-stat-val{
+  color:var(--sol);
+  text-shadow:0 0 8px rgba(153,69,255,0.5);
+}
+
+.about-tag-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  margin-top:1.2rem;
+}
+
+.about-tag{
+  font-size:0.58rem;
+  letter-spacing:0.15em;
+  padding:0.3rem 0.7rem;
+  border:1px solid var(--border);
+  color:var(--green-dim);
+  text-transform:uppercase;
+  background:rgba(0,255,65,0.03);
+}
+
+.about-tag.sol-tag{
+  border-color:var(--sol-dim);
+  color:var(--sol);
+  background:rgba(153,69,255,0.05);
+}
+
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;}
+}
+
+/* PARTNERS */
+
+.partners-section{
+  margin-top:2.5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+}
+
+.partners-icons{
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+
+.partner-icon-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.6rem;
+  padding:1.2rem 1.5rem;
+  border:1px solid var(--border);
+  background:rgba(0,255,65,0.03);
+  border-radius:0;
+  transition:all 0.25s ease;
+  text-decoration:none;
+  min-width:110px;
+}
+
+.partner-icon-btn:hover{
+  border-color:var(--green);
+  background:rgba(0,255,65,0.08);
+  transform:translateY(-4px);
+  box-shadow:0 0 18px rgba(0,255,65,0.15);
+}
+
+.partner-logo-img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius:8px;
+  display:block;
+}
+
+.partner-name{
+  font-size:0.58rem;
+  letter-spacing:0.15em;
+  color:var(--green-dim);
+  text-align:center;
+  text-transform:uppercase;
+  transition:color 0.2s;
+}
+
+.partner-icon-btn:hover .partner-name{
+  color:var(--green);
+}
+
+/* BUY */
+
+.buy-section{
+  text-align:center;
+}
+
+.buy-steps{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:2rem;
+}
+
+.buy-step{
+  border:1px solid var(--border);
+  padding:1.5rem;
+  min-width:160px;
+  max-width:210px;
+  flex:1;
+}
+
+.buy-step-icon{
+  font-size:2rem;
+  display:block;
+  margin-bottom:0.6rem;
+}
+
+.share-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:0.8rem;
+  background:var(--green);
+  color:var(--bg);
+  text-decoration:none;
+  padding:1rem 2.5rem;
+  margin-top:2rem;
+  font-family:'Orbitron',sans-serif;
+}
+
+.x-post-cta{
+  margin-top:1.5rem;
+  display:inline-flex;
+  align-items:center;
+  gap:0.7rem;
+  border:1px solid #1da1f2;
+  color:#1da1f2;
+  padding:0.6rem 1.5rem;
+  text-decoration:none;
+}
+
+/* CONTACT */
+
+.contact-grid{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+  margin-top:1.5rem;
+}
+
+.contact-card{
+  width:70px;
+  height:70px;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:inherit;
+  transition:all 0.25s ease;
+  background:rgba(0,255,65,0.03);
+}
+
+.contact-card:hover{
+  border-color:var(--green);
+  background:rgba(0,255,65,0.1);
+  transform:translateY(-3px);
+}
+
+.contact-icon{
+  width:auto;
+  height:auto;
+  border:none;
+  font-size:1.8rem;
+}
+
+.solscan-link{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  margin-top:2rem;
+  padding:1rem 1.5rem;
+  border:1px solid var(--border);
+  color:var(--sol);
+  text-decoration:none;
+  font-size:0.9rem;
+  transition:all 0.2s;
+}
+
+.solscan-link:hover{
+  border-color:var(--sol);
+  background:rgba(153,69,255,0.08);
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--border);
+  padding:1.5rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+
+.footer-links{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.footer-links a{
+  text-decoration:none;
+  color:var(--green-dim);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.site-grid{
+  grid-template-columns:1fr;
+}
+
+.robot-panel{
+  grid-column:1;
+  grid-row:1;
+}
+
+.meme-panel{
+  grid-column:1;
+  grid-row:2;
+}
+
+.phone-panel{
+  grid-column:1;
+  grid-row:3;
+}
+
+.token-grid{
+  grid-template-columns:1fr;
+}
+
+}
+
 </style>
 </head>
+
 <body>
 
 <!-- SPLASH -->
+
 <div id="screen1">
-  <img class="splash-logo" src="https://raw.githubusercontent.com/robecosystem/Robotic.github.io/refs/heads/main/Robotic%20logo.jpg" alt="ROBOTIC logo">
-  <h1 class="splash-title">ROBOTIC</h1>
-  <div class="splash-chain">// SOLANA BLOCKCHAIN //</div>
-  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
-  <div class="splash-btns">
-    <button class="enter-btn" onclick="enterSite()">[ INITIALIZE ]</button>
-    <button class="launch-btn-splash" onclick="alert('App launching soon — stay tuned!')">LAUNCH APP</button>
-  </div>
+
+<img class="splash-logo"
+src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg">
+
+<h1 class="splash-title">ROBOTIC</h1>
+
+<div class="splash-chain">
+// SOLANA BLOCKCHAIN //
 </div>
 
-<!-- MAIN SITE -->
+<div class="loading-bar-wrap">
+<div class="loading-bar"></div>
+</div>
+
+</div>
+
+<!-- MAIN -->
+
 <div id="screen2">
 
-  <header>
-    <div class="logo">
-      <img class="logo-img" src="https://raw.githubusercontent.com/robecosystem/Robotic.github.io/refs/heads/main/Robotic%20logo.jpg" alt="$ROB">
-      ROBOTIC
-    </div>
-    <div class="header-right">
-      <div class="status-bar">
-        UNIT: <span>RB-7749</span> &nbsp;|&nbsp; CHAIN: <span class="sol-s">SOLANA</span> &nbsp;|&nbsp; AI: <span>ONLINE</span><br>
-        SUPPLY: <span>120,690,000</span> &nbsp;|&nbsp; CIRC: <span>100%</span>
-      </div>
-      <button class="launch-app-btn" onclick="alert('App launching soon — stay tuned!')">LAUNCH APP</button>
-    </div>
-  </header>
+<header>
 
-  <nav>
-    <a href="#robot-sec">ROBOT</a>
-    <a href="#token-sec">TOKENOMICS</a>
-    <a href="#stake-sec">STAKING</a>
-    <a href="#ai-sec">AI + DEFS</a>
-    <a href="#partner-sec">PARTNERS</a>
-    <a href="#product-sec">PRODUCT</a>
-    <a href="#buy-sec">BUY &amp; SHARE</a>
-    <a href="#contact-sec">CONTACT</a>
-  </nav>
+<div class="logo">
 
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span>ROBOTIC OS v3.1</span><span class="hl">// BEEP BOOP //</span><span>MEME FLOW ACTIVATED</span>
-      <span class="shl">// SOLANA CHAIN ONLINE //</span><span>TOTAL SUPPLY: 120,690,000 $ROB</span>
-      <span class="hl">// 100% IN CIRCULATION //</span><span>AI CORE: OPERATIONAL</span>
-      <span class="shl">// SOLANA BLOCKCHAIN VERIFIED //</span><span>ERROR 404: FEELINGS NOT FOUND</span>
-      <span class="hl">// DEPLOY MEMES //</span><span>CHARGING LASER EYES… 97%</span>
-      <span>ROBOTIC OS v3.1</span><span class="hl">// BEEP BOOP //</span><span>MEME FLOW ACTIVATED</span>
-      <span class="shl">// SOLANA CHAIN ONLINE //</span><span>TOTAL SUPPLY: 120,690,000 $ROB</span>
-      <span class="hl">// 100% IN CIRCULATION //</span><span>AI CORE: OPERATIONAL</span>
-      <span class="shl">// SOLANA BLOCKCHAIN VERIFIED //</span><span>ERROR 404: FEELINGS NOT FOUND</span>
-      <span class="hl">// DEPLOY MEMES //</span><span>CHARGING LASER EYES… 97%</span>
+<a href="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg" target="_blank">
+
+<img class="logo-img"
+src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg">
+
+ROBOTIC
+
+</a>
+
+</div>
+
+<div class="header-right">
+
+<button class="launch-btn">
+  <span>▶ LAUNCH APP</span>
+</button>
+
+<div class="status-bar">
+
+UNIT: <span>RB-7749</span> |
+CHAIN: <span class="sol-s">SOLANA</span> |
+AI: <span>ONLINE</span><br>
+
+SUPPLY: <span>120,690,000</span> |
+CIRC: <span>100%</span>
+
+</div>
+
+</div>
+
+</header>
+
+<nav>
+<a href="#robot-sec">ROBOT</a>
+<a href="#about-sec">ABOUT</a>
+<a href="#token-sec">TOKENOMICS</a>
+<a href="#buy-sec">BUY</a>
+<a href="#contact-sec">CONTACT</a>
+</nav>
+
+<div class="site-grid" id="robot-sec">
+
+<!-- ROBOT — unique redesign -->
+
+<div class="panel robot-panel">
+
+<div class="panel-label">
+Unit RB-7749 — AI-Powered
+</div>
+
+<div class="robot-wrap">
+
+<svg class="full-robot-svg" viewBox="0 0 600 680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main green glow filter -->
+    <filter id="glow-main" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Strong eye glow -->
+    <filter id="glow-eye" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Core reactor glow -->
+    <filter id="glow-core" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Radial gradient for chest core -->
+    <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00ff41" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#00ff41" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#00ff41" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Eye gradient -->
+    <radialGradient id="eyeGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#00ff41"/>
+      <stop offset="100%" stop-color="#005515"/>
+    </radialGradient>
+    <!-- Body gradient -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d2a0d"/>
+      <stop offset="100%" stop-color="#060f06"/>
+    </linearGradient>
+    <!-- Clip for scan line -->
+    <clipPath id="headClip">
+      <rect x="160" y="60" width="280" height="180" rx="22"/>
+    </clipPath>
+    <clipPath id="bodyClip">
+      <rect x="130" y="270" width="340" height="250" rx="20"/>
+    </clipPath>
+    <!-- Circuit pattern -->
+    <pattern id="circuit" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="20" x2="15" y2="20" stroke="#00ff41" stroke-width="0.8" opacity="0.25"/>
+      <line x1="15" y1="20" x2="15" y2="5" stroke="#00ff41" stroke-width="0.8" opacity="0.25"/>
+      <circle cx="15" cy="5" r="2" fill="#00ff41" opacity="0.3"/>
+      <line x1="25" y1="20" x2="40" y2="20" stroke="#00ff41" stroke-width="0.8" opacity="0.25"/>
+      <line x1="25" y1="20" x2="25" y2="35" stroke="#00ff41" stroke-width="0.8" opacity="0.25"/>
+      <circle cx="25" cy="35" r="2" fill="#00ff41" opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- ─────────── ANTENNA ARRAY ─────────── -->
+  <!-- Center antenna -->
+  <line x1="300" y1="60" x2="300" y2="15" stroke="#00ff41" stroke-width="4" filter="url(#glow-main)"/>
+  <circle cx="300" cy="10" r="8" fill="#00ff41" filter="url(#glow-eye)" style="animation:antenna-pulse 1.8s ease-in-out infinite"/>
+  <!-- Left antenna -->
+  <line x1="220" y1="65" x2="190" y2="25" stroke="#00ff41" stroke-width="2.5" opacity="0.7"/>
+  <circle cx="187" cy="22" r="5" fill="#00ff41" opacity="0.7" filter="url(#glow-main)" style="animation:antenna-pulse 2.3s ease-in-out infinite 0.4s"/>
+  <!-- Right antenna -->
+  <line x1="380" y1="65" x2="410" y2="25" stroke="#00ff41" stroke-width="2.5" opacity="0.7"/>
+  <circle cx="413" cy="22" r="5" fill="#00ff41" opacity="0.7" filter="url(#glow-main)" style="animation:antenna-pulse 2.1s ease-in-out infinite 0.8s"/>
+
+  <!-- ─────────── HEAD ─────────── -->
+  <!-- Head outer shell with angled top corners -->
+  <path d="M178 80 L200 60 L400 60 L422 80 L430 100 L430 220 L420 235 L180 235 L170 220 L170 100 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="3" filter="url(#glow-main)"/>
+  
+  <!-- Circuit texture on head -->
+  <rect x="170" y="60" width="260" height="175" fill="url(#circuit)" opacity="0.5" clip-path="url(#headClip)"/>
+
+  <!-- Head ridge details -->
+  <line x1="170" y1="110" x2="430" y2="110" stroke="#00ff41" stroke-width="1" opacity="0.4"/>
+  <line x1="170" y1="195" x2="430" y2="195" stroke="#00ff41" stroke-width="1" opacity="0.4"/>
+
+  <!-- Visor / face plate -->
+  <rect x="188" y="90" width="224" height="115" rx="8" fill="#010b01" stroke="#00ff41" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- Scan line animation inside visor -->
+  <rect x="188" y="90" width="224" height="115" rx="8" fill="none" clip-path="url(#headClip)">
+    <animate attributeName="y" values="90;200;90" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="190" y="0" width="220" height="4" fill="#00ff41" opacity="0.15" clip-path="url(#headClip)">
+    <animateTransform attributeName="transform" type="translate" values="0,90;0,200;0,90" dur="3s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- LEFT EYE — hexagonal shape -->
+  <polygon points="248,130 270,118 292,130 292,154 270,166 248,154"
+           fill="#010b01" stroke="#00ff41" stroke-width="2.5"/>
+  <polygon points="252,133 270,122 288,133 288,151 270,162 252,151"
+           fill="url(#eyeGrad)" filter="url(#glow-eye)" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.3;0.9" dur="3.5s" repeatCount="indefinite"/>
+  </polygon>
+  <!-- Eye pupil crosshair -->
+  <line x1="270" y1="126" x2="270" y2="158" stroke="#010b01" stroke-width="2"/>
+  <line x1="254" y1="142" x2="286" y2="142" stroke="#010b01" stroke-width="2"/>
+  <circle cx="270" cy="142" r="5" fill="#010b01"/>
+  <circle cx="270" cy="142" r="2" fill="#00ff41" filter="url(#glow-eye)"/>
+
+  <!-- RIGHT EYE — hexagonal shape -->
+  <polygon points="308,130 330,118 352,130 352,154 330,166 308,154"
+           fill="#010b01" stroke="#00ff41" stroke-width="2.5"/>
+  <polygon points="312,133 330,122 348,133 348,151 330,162 312,151"
+           fill="url(#eyeGrad)" filter="url(#glow-eye)" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.3;0.9" dur="3.5s" repeatCount="indefinite" begin="1.2s"/>
+  </polygon>
+  <!-- Eye pupil crosshair -->
+  <line x1="330" y1="126" x2="330" y2="158" stroke="#010b01" stroke-width="2"/>
+  <line x1="314" y1="142" x2="346" y2="142" stroke="#010b01" stroke-width="2"/>
+  <circle cx="330" cy="142" r="5" fill="#010b01"/>
+  <circle cx="330" cy="142" r="2" fill="#00ff41" filter="url(#glow-eye)"/>
+
+  <!-- NOSE / sensor bar -->
+  <rect x="292" y="170" width="16" height="8" rx="2" fill="#00ff41" opacity="0.6"/>
+
+  <!-- MOUTH — segmented display style -->
+  <rect x="210" y="205" width="180" height="14" rx="2" fill="#010b01" stroke="#00ff41" stroke-width="1.5"/>
+  <!-- Active segments -->
+  <rect x="215" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.2;0.9" dur="0.6s" repeatCount="indefinite" begin="0s"/>
+  </rect>
+  <rect x="242" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="0.6s" repeatCount="indefinite" begin="0.1s"/>
+  </rect>
+  <rect x="269" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.3;0.9" dur="0.5s" repeatCount="indefinite" begin="0.2s"/>
+  </rect>
+  <rect x="296" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.9;0.4" dur="0.7s" repeatCount="indefinite" begin="0.05s"/>
+  </rect>
+  <rect x="323" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="0.55s" repeatCount="indefinite" begin="0.15s"/>
+  </rect>
+  <rect x="350" y="208" width="22" height="8" rx="1" fill="#00ff41" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="0.65s" repeatCount="indefinite" begin="0.25s"/>
+  </rect>
+
+  <!-- Ear / temple bolts -->
+  <rect x="158" y="120" width="16" height="60" rx="6" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <circle cx="166" cy="150" r="5" fill="#00ff41" opacity="0.5"/>
+  <rect x="426" y="120" width="16" height="60" rx="6" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <circle cx="434" cy="150" r="5" fill="#00ff41" opacity="0.5"/>
+
+  <!-- Head-body connector neck -->
+  <rect x="255" y="235" width="90" height="36" rx="5" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="270" y1="240" x2="270" y2="268" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <line x1="290" y1="240" x2="290" y2="268" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <line x1="310" y1="240" x2="310" y2="268" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <line x1="330" y1="240" x2="330" y2="268" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+
+  <!-- ─────────── SHOULDERS ─────────── -->
+  <!-- Left shoulder pauldron -->
+  <path d="M130 285 L155 270 L195 270 L205 290 L205 310 L130 310 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="140" y1="290" x2="200" y2="290" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <!-- Right shoulder pauldron -->
+  <path d="M470 285 L445 270 L405 270 L395 290 L395 310 L470 310 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="460" y1="290" x2="400" y2="290" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+
+  <!-- ─────────── TORSO ─────────── -->
+  <!-- Main body -->
+  <path d="M205 270 L395 270 L415 290 L420 510 L390 525 L210 525 L180 510 L185 290 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="3" filter="url(#glow-main)"/>
+  
+  <!-- Circuit texture on body -->
+  <rect x="185" y="270" width="230" height="255" fill="url(#circuit)" opacity="0.4" clip-path="url(#bodyClip)"/>
+
+  <!-- Chest panel inset -->
+  <rect x="205" y="295" width="190" height="165" rx="10" fill="#010b01" stroke="#00ff41" stroke-width="1.5"/>
+
+  <!-- REACTOR CORE — center of chest panel -->
+  <circle cx="300" cy="370" r="45" fill="url(#coreGrad)" opacity="0.15" filter="url(#glow-core)">
+    <animate attributeName="opacity" values="0.15;0.4;0.15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="370" r="30" fill="#010b01" stroke="#00ff41" stroke-width="2"/>
+  <circle cx="300" cy="370" r="22" fill="#010b01" stroke="#00ff41" stroke-width="1" opacity="0.6"/>
+  <!-- Reactor spokes -->
+  <line x1="300" y1="340" x2="300" y2="352" stroke="#00ff41" stroke-width="2.5" filter="url(#glow-main)"/>
+  <line x1="300" y1="388" x2="300" y2="400" stroke="#00ff41" stroke-width="2.5" filter="url(#glow-main)"/>
+  <line x1="270" y1="370" x2="282" y2="370" stroke="#00ff41" stroke-width="2.5" filter="url(#glow-main)"/>
+  <line x1="318" y1="370" x2="330" y2="370" stroke="#00ff41" stroke-width="2.5" filter="url(#glow-main)"/>
+  <line x1="279" y1="349" x2="287" y2="357" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+  <line x1="313" y1="383" x2="321" y2="391" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+  <line x1="321" y1="349" x2="313" y2="357" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+  <line x1="287" y1="383" x2="279" y2="391" stroke="#00ff41" stroke-width="2" opacity="0.7"/>
+  <!-- Core center -->
+  <circle cx="300" cy="370" r="9" fill="#00ff41" filter="url(#glow-core)" style="animation:chest-core 2s ease-in-out infinite"/>
+
+  <!-- Side vent slits left -->
+  <rect x="213" y="310" width="65" height="5" rx="2" fill="#00ff41" opacity="0.7"/>
+  <rect x="213" y="320" width="55" height="4" rx="2" fill="#00ff41" opacity="0.5"/>
+  <rect x="213" y="329" width="45" height="3" rx="2" fill="#00ff41" opacity="0.3"/>
+
+  <!-- Side vent slits right -->
+  <rect x="322" y="310" width="65" height="5" rx="2" fill="#00ff41" opacity="0.7"/>
+  <rect x="332" y="320" width="55" height="4" rx="2" fill="#00ff41" opacity="0.5"/>
+  <rect x="342" y="329" width="45" height="3" rx="2" fill="#00ff41" opacity="0.3"/>
+
+  <!-- Lower chest bars -->
+  <rect x="215" y="430" width="170" height="6" rx="2" fill="#00ff41" opacity="0.5"/>
+  <rect x="220" y="442" width="130" height="4" rx="2" fill="#00ff41" opacity="0.3"/>
+  <rect x="225" y="452" width="90" height="3" rx="2" fill="#00ff41" opacity="0.2"/>
+
+  <!-- Side body bolts -->
+  <circle cx="193" cy="360" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+  <circle cx="193" cy="400" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+  <circle cx="193" cy="440" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+  <circle cx="407" cy="360" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+  <circle cx="407" cy="400" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+  <circle cx="407" cy="440" r="6" fill="#00ff41" opacity="0.4" stroke="#00ff41" stroke-width="1"/>
+
+  <!-- ─────────── ARMS ─────────── -->
+  <!-- LEFT ARM -->
+  <path d="M105 305 L130 295 L185 295 L185 465 L165 475 L105 475 L90 460 L90 320 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2.5"/>
+  <!-- Left arm panel -->
+  <rect x="100" y="320" width="75" height="90" rx="6" fill="#010b01" stroke="#00ff41" stroke-width="1" opacity="0.8"/>
+  <rect x="106" y="326" width="63" height="5" rx="1" fill="#00ff41" opacity="0.6"/>
+  <rect x="106" y="336" width="45" height="4" rx="1" fill="#00ff41" opacity="0.4">
+    <animate attributeName="width" values="45;63;45" dur="1.5s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="106" y="345" width="55" height="4" rx="1" fill="#00ff41" opacity="0.3"/>
+  <!-- Elbow joint left -->
+  <ellipse cx="137" cy="465" rx="35" ry="14" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="107" y1="465" x2="167" y2="465" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <!-- Left forearm -->
+  <path d="M107 467 L167 467 L172 490 L160 530 L115 530 L103 490 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <!-- Left hand claw -->
+  <rect x="110" y="530" width="55" height="25" rx="5" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="112" y="555" width="10" height="30" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="127" y="555" width="10" height="35" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="142" y="555" width="10" height="33" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="157" y="555" width="10" height="28" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+
+  <!-- RIGHT ARM -->
+  <path d="M495 305 L470 295 L415 295 L415 465 L435 475 L495 475 L510 460 L510 320 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2.5"/>
+  <!-- Right arm panel -->
+  <rect x="425" y="320" width="75" height="90" rx="6" fill="#010b01" stroke="#00ff41" stroke-width="1" opacity="0.8"/>
+  <rect x="431" y="326" width="63" height="5" rx="1" fill="#00ff41" opacity="0.6"/>
+  <rect x="449" y="336" width="45" height="4" rx="1" fill="#00ff41" opacity="0.4">
+    <animate attributeName="width" values="45;63;45" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+  </rect>
+  <rect x="441" y="345" width="55" height="4" rx="1" fill="#00ff41" opacity="0.3"/>
+  <!-- Elbow joint right -->
+  <ellipse cx="463" cy="465" rx="35" ry="14" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="433" y1="465" x2="493" y2="465" stroke="#00ff41" stroke-width="1" opacity="0.5"/>
+  <!-- Right forearm -->
+  <path d="M433 467 L493 467 L497 490 L485 530 L445 530 L428 490 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <!-- Right hand claw -->
+  <rect x="435" y="530" width="55" height="25" rx="5" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="437" y="555" width="10" height="28" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="452" y="555" width="10" height="33" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="467" y="555" width="10" height="35" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+  <rect x="482" y="555" width="10" height="30" rx="4" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="1.5"/>
+
+  <!-- ─────────── HIPS / PELVIS ─────────── -->
+  <path d="M185 515 L415 515 L430 535 L420 555 L180 555 L170 535 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <line x1="185" y1="535" x2="415" y2="535" stroke="#00ff41" stroke-width="1" opacity="0.4"/>
+  <!-- Hip vents -->
+  <rect x="210" y="524" width="80" height="4" rx="1" fill="#00ff41" opacity="0.4"/>
+  <rect x="310" y="524" width="80" height="4" rx="1" fill="#00ff41" opacity="0.4"/>
+
+  <!-- ─────────── LEGS ─────────── -->
+  <!-- LEFT LEG upper -->
+  <path d="M188 555 L275 555 L280 570 L280 650 L260 665 L193 665 L178 650 L183 570 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2.5"/>
+  <!-- Left knee joint -->
+  <ellipse cx="229" cy="650" rx="42" ry="15" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <!-- Left leg detail lines -->
+  <line x1="195" y1="590" x2="272" y2="590" stroke="#00ff41" stroke-width="1" opacity="0.4"/>
+  <line x1="195" y1="615" x2="272" y2="615" stroke="#00ff41" stroke-width="1" opacity="0.3"/>
+  <!-- Left shin -->
+  <path d="M190 655 L268 655 L265 680 L245 680 L229 680 L195 680 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+
+  <!-- RIGHT LEG upper -->
+  <path d="M412 555 L325 555 L320 570 L320 650 L340 665 L407 665 L422 650 L417 570 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2.5"/>
+  <!-- Right knee joint -->
+  <ellipse cx="371" cy="650" rx="42" ry="15" fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+  <!-- Right leg detail lines -->
+  <line x1="328" y1="590" x2="405" y2="590" stroke="#00ff41" stroke-width="1" opacity="0.4"/>
+  <line x1="328" y1="615" x2="405" y2="615" stroke="#00ff41" stroke-width="1" opacity="0.3"/>
+  <!-- Right shin -->
+  <path d="M330 655 L408 655 L405 680 L385 680 L371 680 L335 680 Z"
+        fill="url(#bodyGrad)" stroke="#00ff41" stroke-width="2"/>
+
+  <!-- Ground shadow -->
+  <ellipse cx="300" cy="685" rx="180" ry="6" fill="#00ff41" opacity="0.08"/>
+</svg>
+
+</div>
+
+<div class="robot-caption">
+BEEP BOOP — $ROB ACTIVATED
+</div>
+
+</div>
+
+<!-- MEME -->
+
+<div class="panel meme-panel">
+
+<div class="panel-label">
+Meme Protocol — Active
+</div>
+
+<div class="meme-title">
+THE MOST<br>
+ROBOTIC MEME<br>
+ON SOLANA
+</div>
+
+<div class="meme-cards">
+
+<div class="meme-card">
+<span class="meme-card-icon">
+<i class="fa-solid fa-robot"></i>
+</span>
+<div>100% AI-Powered Chaos Engine</div>
+</div>
+
+<div class="meme-card">
+<span class="meme-card-icon">
+<i class="fa-solid fa-bolt"></i>
+</span>
+<div>Zero Feelings. Maximum Gains.</div>
+</div>
+
+<div class="meme-card">
+<span class="meme-card-icon">
+<i class="fa-solid fa-brain"></i>
+</span>
+<div>Smart Contract. Smarter Memes.</div>
+</div>
+
+<div class="meme-card">
+<span class="meme-card-icon">
+<i class="fa-solid fa-rocket"></i>
+</span>
+<div>To The Moon. Or The Server Farm.</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- PHONE -->
+
+<div class="panel phone-panel">
+
+<div class="phone-wrap">
+
+<svg class="phone-svg" viewBox="0 0 130 220" fill="none">
+
+<rect x="5" y="5"
+width="120"
+height="210"
+rx="18"
+fill="#050f05"
+stroke="#00ff41"
+stroke-width="8"/>
+
+<rect x="50" y="18"
+width="30"
+height="8"
+rx="2"
+fill="#1a3a1a"/>
+
+</svg>
+
+<div class="phone-screen">
+
+<div class="phone-carousel">
+
+<img src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg"
+class="carousel-img active">
+
+<img src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg"
+class="carousel-img">
+
+<img src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg"
+class="carousel-img">
+
+</div>
+
+<div class="phone-console">
+&gt; $ROB CONNECTED<br>
+&gt; PRESALE ACTIVE<br>
+&gt; LIQUIDITY: 35%<br>
+&gt; STATUS: ONLINE
+</div>
+
+</div>
+
+</div>
+
+<div class="phone-info">
+
+<h3>MOBILE — SOLANA EDITION</h3>
+
+<ul class="spec-list">
+
+<li>Chain: <span>Solana Blockchain</span></li>
+
+<li>Symbol: <span>$ROB</span></li>
+
+<li>Supply: <span>120,690,000</span></li>
+
+<li>Circulation: <span>100%</span></li>
+
+<li>
+Explorer:
+<a href="https://solscan.io" target="_blank">
+View on Solscan
+</a>
+</li>
+
+</ul>
+
+<div class="lock-badge">
+<i class="fa-solid fa-lock"></i>
+100% LIQUIDITY LOCKED — 24 MONTHS
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ABOUT -->
+
+<div class="section-head" id="about-sec">
+<h2>ABOUT ROBOTIC — UNIT RB-7749</h2>
+<div class="line"></div>
+</div>
+
+<div class="about-section">
+
+<div class="panel-label">
+SYSTEM INTELLIGENCE BRIEF — CLASSIFIED LEVEL 7
+</div>
+
+<div class="about-grid">
+
+<!-- ROBOT BLOCK -->
+<div class="about-block robot-block">
+
+<span class="about-block-icon"><i class="fa-solid fa-robot"></i></span>
+
+<div class="about-block-title">WHAT IS ROBOTIC?</div>
+
+<div class="about-text">
+<p>
+<span class="about-highlight">ROBOTIC ($ROB)</span> is the most mechanically engineered meme token ever deployed on the Solana blockchain. Born from the circuits of chaos and the logic gates of pure degenerate finance, ROBOTIC is not just a token — it is an autonomous economic unit programmed to disrupt.
+</p>
+<p>
+Unit <span class="about-highlight">RB-7749</span> was initialized on the Solana network with a fixed supply of <span class="about-highlight">120,690,000 $ROB</span> tokens — 100% in circulation from genesis. No minting. No inflation. No dev wallet rugs. Just raw, uncut, machine-grade tokenomics hardcoded into the blockchain.
+</p>
+<p>
+ROBOTIC operates on a <span class="about-highlight">zero-emotion protocol</span>. While humans panic-sell and FUD, Unit RB-7749 continues to execute. Every transaction is a command. Every holder is a node in the ROBOTIC network. The mission: achieve maximum distribution across the Solana ecosystem and beyond.
+</p>
+</div>
+
+<div class="about-stats">
+<div class="about-stat">
+  <span class="about-stat-val">120.69M</span>
+  <span class="about-stat-label">Total Supply</span>
+</div>
+<div class="about-stat">
+  <span class="about-stat-val">100%</span>
+  <span class="about-stat-label">Circulating</span>
+</div>
+<div class="about-stat">
+  <span class="about-stat-val">24 MO</span>
+  <span class="about-stat-label">Liq. Locked</span>
+</div>
+<div class="about-stat">
+  <span class="about-stat-val">0%</span>
+  <span class="about-stat-label">Dev Allocation</span>
+</div>
+</div>
+
+<div class="about-tag-row">
+<span class="about-tag">MEME TOKEN</span>
+<span class="about-tag">DEFLATIONARY</span>
+<span class="about-tag">COMMUNITY OWNED</span>
+<span class="about-tag">LOCKED LIQUIDITY</span>
+</div>
+
+</div>
+
+<!-- AI BLOCK -->
+<div class="about-block ai-block">
+
+<span class="about-block-icon ai-icon"><i class="fa-solid fa-microchip"></i></span>
+
+<div class="about-block-title ai-title">ARTIFICIAL INTELLIGENCE CORE</div>
+
+<div class="about-text">
+<p>
+At the heart of ROBOTIC lies an <span class="about-highlight-sol">AI-powered intelligence framework</span> — the very system that makes $ROB more than just another meme. Artificial Intelligence is the simulation of human cognitive functions by machines: learning, reasoning, problem-solving, and adaptation. ROBOTIC embeds this philosophy into every layer of its ecosystem.
+</p>
+<p>
+The ROBOTIC AI engine continuously monitors <span class="about-highlight-sol">on-chain signals</span>, community sentiment, and market patterns. It processes millions of data points per second across the Solana network — identifying trading opportunities, liquidity flows, and optimal entry vectors with machine precision that no human trader can replicate.
+</p>
+<p>
+<span class="about-highlight-sol">Machine Learning models</span> power the ROBOTIC meme generation engine, producing culturally resonant content at superhuman speed. The AI adapts to trending narratives, amplifying $ROB visibility across X (Twitter), Telegram, and the wider crypto social graph — autonomously and relentlessly.
+</p>
+<p>
+In the future, ROBOTIC AI will serve as the foundation for <span class="about-highlight-sol">autonomous trading bots</span>, AI-generated NFT drops, and a decentralized intelligence network where $ROB holders govern the machine.
+</p>
+</div>
+
+<div class="about-stats">
+<div class="about-stat about-stat-sol">
+  <span class="about-stat-val">∞</span>
+  <span class="about-stat-label">Data Points/sec</span>
+</div>
+<div class="about-stat about-stat-sol">
+  <span class="about-stat-val">AI</span>
+  <span class="about-stat-label">Powered Core</span>
+</div>
+<div class="about-stat about-stat-sol">
+  <span class="about-stat-val">24/7</span>
+  <span class="about-stat-label">Always Online</span>
+</div>
+<div class="about-stat about-stat-sol">
+  <span class="about-stat-val">0ms</span>
+  <span class="about-stat-label">Emotion Delay</span>
+</div>
+</div>
+
+<div class="about-tag-row">
+<span class="about-tag sol-tag">MACHINE LEARNING</span>
+<span class="about-tag sol-tag">NEURAL NETWORK</span>
+<span class="about-tag sol-tag">AUTO TRADING</span>
+<span class="about-tag sol-tag">AI GOVERNANCE</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TOKEN -->
+
+<div class="section-head" id="token-sec">
+<h2>TOKENOMICS — ON-CHAIN DATA</h2>
+<div class="line"></div>
+</div>
+
+<div class="token-section">
+
+<div class="token-grid">
+
+<div class="token-card">
+
+<span class="token-card-icon">
+<i class="fa-solid fa-coins"></i>
+</span>
+
+<div class="token-card-val">
+
+<a href="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg" target="_blank">
+
+<img class="token-logo-tiny"
+src="https://raw.githubusercontent.com/robecosystem/robecosystem.github.io/refs/heads/main/ROBOTIC%20logo.jpg">
+
+$ROB
+
+</a>
+
+</div>
+
+<div>Token Symbol</div>
+
+</div>
+
+<div class="token-card">
+
+<span class="token-card-icon">
+<i class="fa-solid fa-chart-pie"></i>
+</span>
+
+<div class="token-card-val">
+120.69M
+</div>
+
+<div>Total Supply</div>
+
+</div>
+
+<div class="token-card">
+
+<span class="token-card-icon">
+<i class="fa-solid fa-rotate"></i>
+</span>
+
+<div class="token-card-val">
+100%
+</div>
+
+<div>Circulating</div>
+
+</div>
+
+<div class="token-card">
+
+<span class="token-card-icon">
+<i class="fa-solid fa-link"></i>
+</span>
+
+<div class="token-card-val">
+SOLANA
+</div>
+
+<div>Blockchain</div>
+
+</div>
+
+</div>
+
+<!-- TOKENOMICS DONUT CHART -->
+<div class="tokenomics-chart-wrap">
+
+  <div class="donut-container">
+    <svg class="donut-svg" viewBox="0 0 200 200">
+      <!-- Background ring -->
+      <circle cx="100" cy="100" r="75" fill="none" stroke="#0d2a0d" stroke-width="30"/>
+
+      <!-- PRESALE 55% — green — starts at 0deg (top after -90deg rotation) -->
+      <!-- Circumference = 2π × 75 ≈ 471.24 -->
+      <!-- 55% = 259.18, gap to next -->
+      <circle cx="100" cy="100" r="75" fill="none"
+              stroke="#00ff41" stroke-width="30"
+              stroke-dasharray="259.18 212.06"
+              stroke-dashoffset="0"
+              filter="url(#glow-main)" opacity="0.95">
+        <animate attributeName="stroke-dasharray" values="0 471.24;259.18 212.06" dur="1.5s" fill="freeze" begin="0.2s"/>
+      </circle>
+
+      <!-- LIQUIDITY 35% — purple — offset by 55% -->
+      <!-- 35% = 164.93, offset = -259.18 (i.e. 471.24-259.18=212.06 but negated) -->
+      <circle cx="100" cy="100" r="75" fill="none"
+              stroke="#9945FF" stroke-width="30"
+              stroke-dasharray="164.93 306.31"
+              stroke-dashoffset="-259.18"
+              opacity="0.9">
+        <animate attributeName="stroke-dasharray" values="0 471.24;164.93 306.31" dur="1.5s" fill="freeze" begin="0.5s"/>
+      </circle>
+
+      <!-- MARKETING 10% — amber — offset by 90% -->
+      <!-- 10% = 47.12, offset = -(259.18+164.93)=-424.11 -->
+      <circle cx="100" cy="100" r="75" fill="none"
+              stroke="#ffb300" stroke-width="30"
+              stroke-dasharray="47.12 424.12"
+              stroke-dashoffset="-424.11"
+              opacity="0.9">
+        <animate attributeName="stroke-dasharray" values="0 471.24;47.12 424.12" dur="1.5s" fill="freeze" begin="0.8s"/>
+      </circle>
+
+      <!-- Inner circle to create donut hole -->
+      <circle cx="100" cy="100" r="58" fill="#010b01"/>
+    </svg>
+
+    <div class="donut-center">
+      <div class="donut-center-label">TOKEN</div>
+      <div class="donut-center-val">$ROB</div>
+      <div class="donut-center-sym">SOLANA</div>
     </div>
   </div>
 
-  <!-- ══ SECTION 1: HERO GRID ══ -->
-  <div class="site-grid" id="robot-sec">
+  <div class="chart-legend">
 
-    <!-- ROBOT SVG -->
-    <div class="panel robot-panel">
-      <div class="panel-label">Unit RB-7749 — AI-Powered</div>
-      <div class="robot-wrap">
-        <svg class="robot-svg" viewBox="0 0 280 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- antenna -->
-          <line x1="140" y1="10" x2="140" y2="55" stroke="#00ff41" stroke-width="3"/>
-          <circle class="antenna-light" cx="140" cy="8" r="7" fill="#ff0040"/>
-          <!-- head -->
-          <rect x="70" y="55" width="140" height="110" rx="8" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <!-- eyes -->
-          <g class="eye" style="transform-origin:106px 110px">
-            <rect x="86" y="95" width="40" height="30" rx="4" fill="#00ff41" opacity="0.15"/>
-            <rect x="90" y="99" width="32" height="22" rx="3" fill="#00ff41"/>
-          </g>
-          <g class="eye" style="transform-origin:174px 110px">
-            <rect x="154" y="95" width="40" height="30" rx="4" fill="#00ff41" opacity="0.15"/>
-            <rect x="158" y="99" width="32" height="22" rx="3" fill="#00ff41"/>
-          </g>
-          <!-- mouth -->
-          <rect x="100" y="140" width="80" height="12" rx="2" fill="none" stroke="#00ff41" stroke-width="1.5"/>
-          <rect x="108" y="144" width="12" height="4" rx="1" fill="#00ff41"/>
-          <rect x="128" y="144" width="12" height="4" rx="1" fill="#00ff41"/>
-          <rect x="148" y="144" width="12" height="4" rx="1" fill="#00ff41"/>
-          <!-- neck -->
-          <rect x="120" y="165" width="40" height="20" rx="2" fill="#050f05" stroke="#00ff41" stroke-width="1.5"/>
-          <!-- body -->
-          <rect x="55" y="185" width="170" height="130" rx="8" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <!-- chest detail -->
-          <rect x="80" y="205" width="120" height="70" rx="4" fill="none" stroke="#1a3a1a" stroke-width="1"/>
-          <rect x="90" y="215" width="40" height="40" rx="3" fill="#050f05" stroke="#00a827" stroke-width="1"/>
-          <circle cx="110" cy="235" r="12" fill="none" stroke="#00ff41" stroke-width="1.5"/>
-          <circle cx="110" cy="235" r="5" fill="#00ff41" opacity="0.5"/>
-          <rect x="145" y="215" width="45" height="8" rx="1" fill="#00ff41" opacity="0.3"/>
-          <rect x="145" y="228" width="35" height="8" rx="1" fill="#00ff41" opacity="0.2"/>
-          <rect x="145" y="241" width="40" height="8" rx="1" fill="#00ff41" opacity="0.15"/>
-          <!-- arms -->
-          <rect x="10" y="190" width="45" height="110" rx="20" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <circle cx="32" cy="315" r="16" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <rect x="215" y="190" width="45" height="110" rx="20" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <circle cx="238" cy="315" r="16" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <!-- legs -->
-          <rect x="85" y="315" width="45" height="55" rx="8" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <rect x="150" y="315" width="45" height="55" rx="8" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <!-- feet -->
-          <rect x="75" y="360" width="65" height="20" rx="6" fill="#050f05" stroke="#00ff41" stroke-width="1.5"/>
-          <rect x="140" y="360" width="65" height="20" rx="6" fill="#050f05" stroke="#00ff41" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div class="robot-caption">BEEP BOOP — $ROB ACTIVATED</div>
-    </div>
-
-    <!-- MEME CARDS -->
-    <div class="panel meme-panel">
-      <div class="panel-label">Meme Protocol — Active</div>
-      <div class="meme-title">THE MOST<br>ROBOTIC MEME<br>ON SOLANA</div>
-      <div class="meme-cards">
-        <div class="meme-card">
-          <span class="meme-card-icon">🤖</span>
-          <div class="meme-card-text">100% AI-Powered Chaos Engine</div>
-          <div class="meme-card-sub">MEME PROTOCOL v2.4</div>
-          <div class="corner-tag">HOT</div>
-        </div>
-        <div class="meme-card">
-          <span class="meme-card-icon">⚡</span>
-          <div class="meme-card-text">Zero Feelings. Maximum Gains.</div>
-          <div class="meme-card-sub">EMOTION MODULE: OFFLINE</div>
-          <div class="corner-tag">VIRAL</div>
-        </div>
-        <div class="meme-card">
-          <span class="meme-card-icon">🧠</span>
-          <div class="meme-card-text">Smart Contract. Smarter Memes.</div>
-          <div class="meme-card-sub">SOLANA CHAIN VERIFIED</div>
-          <div class="corner-tag">NEW</div>
-        </div>
-        <div class="meme-card">
-          <span class="meme-card-icon">🚀</span>
-          <div class="meme-card-text">To The Moon. Or The Server Farm.</div>
-          <div class="meme-card-sub">DESTINATION: UNKNOWN</div>
-          <div class="corner-tag">LIVE</div>
-        </div>
+    <div class="legend-item">
+      <div class="legend-dot presale"></div>
+      <div class="legend-info">
+        <div class="legend-pct presale">55%</div>
+        <div class="legend-name">PRESALE</div>
       </div>
     </div>
 
-    <!-- PHONE / MOBILE INFO -->
-    <div class="panel phone-panel" id="phone-panel-sec">
-      <div class="phone-wrap">
-        <svg class="phone-svg" viewBox="0 0 110 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="5" width="100" height="190" rx="14" fill="#050f05" stroke="#00ff41" stroke-width="2"/>
-          <rect x="15" y="20" width="80" height="130" rx="4" fill="#010b01" stroke="#1a3a1a" stroke-width="1"/>
-          <rect x="20" y="25" width="70" height="120" rx="3" fill="#010b01"/>
-          <text x="55" y="80" text-anchor="middle" font-family="'Orbitron',sans-serif" font-size="9" fill="#9945FF" font-weight="700">$ROB</text>
-          <text x="55" y="95" text-anchor="middle" font-family="'Share Tech Mono',monospace" font-size="7" fill="#00ff41">SOLANA</text>
-          <text x="55" y="110" text-anchor="middle" font-family="'Share Tech Mono',monospace" font-size="6" fill="#00a827">120,690,000</text>
-          <rect x="38" y="163" width="34" height="18" rx="9" fill="#1a3a1a"/>
-          <circle cx="55" cy="172" r="5" fill="#050f05" stroke="#00ff41" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <div class="phone-info">
-        <h3>MOBILE — SOLANA EDITION</h3>
-        <ul class="spec-list">
-          <li>Chain: <span>Solana Blockchain</span></li>
-          <li>Symbol: <span>$ROB</span></li>
-          <li>Supply: <span>120,690,000</span></li>
-          <li>Circulation: <span>100%</span></li>
-          <li>Explorer: <a href="https://solscan.io" target="_blank" rel="noopener">View on Solscan ↗</a></li>
-        </ul>
-        <div class="lock-badge">🔒 100% LIQUIDITY LOCKED — 24 MONTHS</div>
-        <br>
-        <a class="action-btn" href="https://solscan.io" target="_blank" rel="noopener">VIEW ON CHAIN</a>
+    <div class="legend-item">
+      <div class="legend-dot liquidity"></div>
+      <div class="legend-info">
+        <div class="legend-pct liquidity">35%</div>
+        <div class="legend-name">LIQUIDITY</div>
       </div>
     </div>
 
-  </div><!-- /site-grid -->
-
-  <!-- ══ SECTION 2: TOKENOMICS ══ -->
-  <div class="section-head" id="token-sec">
-    <h2>TOKENOMICS — ON-CHAIN DATA</h2>
-    <div class="line"></div>
-  </div>
-
-  <div class="token-section">
-    <div class="panel-label">$ROB Token Distribution — Solana</div>
-    <div class="token-grid">
-      <div class="token-card">
-        <span class="token-card-icon">🪙</span>
-        <div class="token-card-val">
-          <img class="token-logo-tiny" src="https://raw.githubusercontent.com/robecosystem/Robotic.github.io/refs/heads/main/Robotic%20logo.jpg" alt="$ROB">
-          $ROB
-        </div>
-        <div class="token-card-label">Token Symbol</div>
-      </div>
-      <div class="token-card">
-        <span class="token-card-icon">📊</span>
-        <div class="token-card-val">120.69M</div>
-        <div class="token-card-label">Total Supply</div>
-      </div>
-      <div class="token-card">
-        <span class="token-card-icon">🔄</span>
-        <div class="token-card-val">100%</div>
-        <div class="token-card-label">Circulating</div>
-      </div>
-      <div class="token-card">
-        <span class="token-card-icon">⛓️</span>
-        <div class="token-card-val" style="font-size:1rem;">SOLANA</div>
-        <div class="token-card-label">Blockchain</div>
+    <div class="legend-item">
+      <div class="legend-dot marketing"></div>
+      <div class="legend-info">
+        <div class="legend-pct marketing">10%</div>
+        <div class="legend-name">MARKETING / DEX / PARTNERSHIP</div>
       </div>
     </div>
 
-    <!-- TOKENOMICS PIE CHART -->
-    <div class="chart-wrap">
-      <div class="pie-container">
-        <svg class="pie-svg" viewBox="0 0 36 36">
-          <!-- 55% presale -->
-          <circle cx="18" cy="18" r="15.9154" fill="transparent" stroke="#9945FF" stroke-width="3.6"
-            stroke-dasharray="55 45" stroke-dashoffset="0"/>
-          <!-- 35% liquidity -->
-          <circle cx="18" cy="18" r="15.9154" fill="transparent" stroke="#00ff41" stroke-width="3.6"
-            stroke-dasharray="35 65" stroke-dashoffset="-55"/>
-          <!-- 10% dex/marketing -->
-          <circle cx="18" cy="18" r="15.9154" fill="transparent" stroke="#ffb300" stroke-width="3.6"
-            stroke-dasharray="10 90" stroke-dashoffset="-90"/>
-        </svg>
-        <div class="pie-center">
-          <div class="pie-center-sym">$ROB</div>
-          <div class="pie-center-label">ALLOC</div>
-        </div>
-      </div>
-      <div class="pie-legend">
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#9945FF;"></div>
-          <span class="legend-pct">55%</span>
-          <span>PRESALE</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#00ff41;"></div>
-          <span class="legend-pct">35%</span>
-          <span>LIQUIDITY</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#ffb300;"></div>
-          <span class="legend-pct">10%</span>
-          <span>DEX LISTING / MARKETING / PARTNERSHIP</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="supply-bar-wrap">
-      <div class="supply-bar-label">
-        <span>TOTAL SUPPLY DISTRIBUTED</span>
-        <span class="sv">120,690,000 $ROB</span>
-      </div>
-      <div class="supply-bar-track">
-        <div class="supply-bar-fill">
-          <span class="supply-bar-text">100% IN CIRCULATION</span>
-        </div>
-      </div>
-    </div>
-
-    <a class="sol-link" href="https://solscan.io" target="_blank" rel="noopener">
-      <span class="sol-badge">SOLANA</span>
-      <span>View $ROB token on Solscan — on-chain data, holders & transactions ↗</span>
-    </a>
   </div>
 
-  <!-- ══ SECTION 3: STAKING ══ -->
-  <div class="section-head" id="stake-sec">
-    <h2>STAKING — EARN $ROB</h2>
-    <div class="line"></div>
-  </div>
+</div>
 
-  <div class="stake-section">
-    <div class="panel-label">Stake $ROB — Rewards Coming</div>
-    <div class="stake-grid">
-      <div class="stake-card">
-        <div class="stake-pct">APY<sub> %</sub></div>
-        <div class="stake-label">Base Staking Reward</div>
-        <div class="stake-desc">Lock your $ROB and earn passive yield. Base pool rewards distributed weekly on Solana.</div>
-        <div class="tba-badge">RATE TBA</div>
-      </div>
-      <div class="stake-card">
-        <div class="stake-pct">BOOST<sub> %</sub></div>
-        <div class="stake-label">Long-term Multiplier</div>
-        <div class="stake-desc">Longer lock periods unlock boosted APY tiers. Stake 6–24 months for maximum multiplier.</div>
-        <div class="tba-badge">RATE TBA</div>
-      </div>
-      <div class="stake-card">
-        <div class="stake-pct">EARLY<sub> %</sub></div>
-        <div class="stake-label">Early Adopter Bonus</div>
-        <div class="stake-desc">First stakers receive a special early-access bonus rate before the full pool opens to the public.</div>
-        <div class="tba-badge">RATE TBA</div>
-      </div>
-    </div>
-  </div>
+<!-- PARTNERS -->
 
-  <!-- AI SECTION -->
-  <div class="section-head" id="ai-sec">
-    <h2>AI + DEFINITIONS</h2>
-    <div class="line"></div>
-  </div>
+<div class="partners-section">
 
-  <div class="ai-section">
-    <div class="panel-label">Core AI Framework</div>
-    <div class="ai-grid">
-      <div class="ai-block">
-        <div class="ai-num">01</div>
-        <h4>MEME INTELLIGENCE</h4>
-        <p>AI-driven meme generation engine that processes market sentiment in real-time and deploys viral content autonomously across the Solana ecosystem.</p>
-        <span class="ai-tag">STATUS: ONLINE</span>
-      </div>
-      <div class="ai-block">
-        <div class="ai-num">02</div>
-        <h4>CHAIN ORACLE</h4>
-        <p>On-chain data aggregation module. Reads Solana block state every 400ms and surfaces insights directly to the $ROB community dashboard.</p>
-        <span class="ai-tag">LATENCY: 400MS</span>
-      </div>
-      <div class="ai-block">
-        <div class="ai-num">03</div>
-        <h4>ROBOTIC CORE</h4>
-        <p>The autonomous decision layer. Pattern-matches historical token launches, calibrates liquidity depth, and coordinates staking reward distribution.</p>
-        <span class="ai-tag">BUILD: v3.1.0</span>
-      </div>
-    </div>
-  </div>
+<div class="panel-label">
+OFFICIAL PARTNERS
+</div>
 
-  <!-- PARTNERS -->
-  <div class="section-head" id="partner-sec">
-    <h2>PARTNERS &amp; ECOSYSTEM</h2>
-    <div class="line"></div>
-  </div>
+<div class="partners-icons">
+  <a href="https://pinksale.finance" target="_blank" class="partner-icon-btn">
+    <img class="partner-logo-img" src="https://www.pinksale.finance/assets/logo.png" alt="PinkSale">
+    <span class="partner-name">PinkSale.finance</span>
+  </a>
+  <a href="https://dexview.com" target="_blank" class="partner-icon-btn">
+    <img class="partner-logo-img" src="https://dexview.com/favicon.ico" alt="DexView" style="border-radius:50%;">
+    <span class="partner-name">DexView.com</span>
+  </a>
+  <a href="https://raydium.io" target="_blank" class="partner-icon-btn">
+    <img class="partner-logo-img" src="https://raydium.io/_next/image?url=%2Flogo.png&w=64&q=75" alt="Raydium">
+    <span class="partner-name">Raydium.io</span>
+  </a>
+</div>
 
-  <div class="partner-section">
-    <div class="panel-label">Verified Ecosystem Partners</div>
-    <div class="partner-grid">
-      <a class="partner-card" href="https://www.dexview.com" target="_blank" rel="noopener">
-        <div class="partner-card-logo">📈</div>
-        <div class="partner-card-name">DEXVIEW</div>
-        <div class="partner-card-url">dexview.com ↗</div>
-      </a>
-      <a class="partner-card" href="https://www.pinksale.finance" target="_blank" rel="noopener">
-        <div class="partner-card-logo">🌸</div>
-        <div class="partner-card-name">PINKSALE</div>
-        <div class="partner-card-url">pinksale.finance ↗</div>
-      </a>
-      <a class="partner-card" href="https://raydium.io" target="_blank" rel="noopener">
-        <div class="partner-card-logo">⚡</div>
-        <div class="partner-card-name">RAYDIUM</div>
-        <div class="partner-card-url">raydium.io ↗</div>
-      </a>
-    </div>
-  </div>
+</div>
 
-  <!-- PRODUCT -->
-  <div class="section-head" id="product-sec">
-    <h2>PRODUCT</h2>
-    <div class="line"></div>
-  </div>
+</div>
 
-  <div class="product-section">
-    <div class="panel-label">Robotic Ecosystem — Tools &amp; Features</div>
-    <div class="product-grid">
-      <div class="product-card">
-        <h4>ROBOTIC DASHBOARD</h4>
-        <p>Real-time portfolio tracking, staking management, and on-chain analytics — all in one terminal-style interface built for $ROB holders.</p>
-      </div>
-      <div class="product-card">
-        <h4>MEME LAUNCHER</h4>
-        <p>AI-powered meme generator trained on the best crypto culture moments. One click deploys your meme to X, Telegram &amp; Discord simultaneously.</p>
-      </div>
-      <div class="product-card ad-card" onclick="window.location.href='mailto:contact@robotic.io?subject=Advertise on ROBOTIC'">
-        <div class="ad-label">AVAILABLE SLOT</div>
-        <h4>CREATE PROJECT AD HERE</h4>
-        <p>Feature your project in front of the ROBOTIC community. Click to reach out and secure your advertising spot in the ecosystem.</p>
-      </div>
-    </div>
-  </div>
+<!-- BUY -->
 
-  <!-- BUY & SHARE / SCREENSHOT -->
-  <div class="section-head" id="buy-sec">
-    <h2>BUY &amp; SHARE</h2>
-    <div class="line"></div>
-  </div>
+<div class="section-head" id="buy-sec">
+<h2>BUY & SHARE</h2>
+<div class="line"></div>
+</div>
 
-  <div class="buy-section">
-    <h2>GET $ROB</h2>
-    <p class="subtitle">// ACQUIRE — STAKE — SHARE — REPEAT //</p>
+<div class="buy-section">
 
-    <div class="buy-steps">
-      <div class="buy-step">
-        <div class="buy-step-num">01</div>
-        <span class="buy-step-icon">👛</span>
-        <h4>GET A WALLET</h4>
-        <p>Install Phantom or Solflare. Your gateway to the Solana ecosystem.</p>
-      </div>
-      <div class="step-arrow">▶</div>
-      <div class="buy-step">
-        <div class="buy-step-num">02</div>
-        <span class="buy-step-icon">⚡</span>
-        <h4>GET SOL</h4>
-        <p>Buy SOL from any exchange and bridge it to your Solana wallet.</p>
-      </div>
-      <div class="step-arrow">▶</div>
-      <div class="buy-step">
-        <div class="buy-step-num">03</div>
-        <span class="buy-step-icon">🤖</span>
-        <h4>BUY $ROB</h4>
-        <p>Swap SOL for $ROB on Raydium. Paste the contract address and confirm.</p>
-      </div>
-      <div class="step-arrow">▶</div>
-      <div class="buy-step">
-        <div class="buy-step-num">04</div>
-        <span class="buy-step-icon">📸</span>
-        <h4>SCREENSHOT IT</h4>
-        <p>Screenshot your bag. Comment and share under our first and only post and follow our X.</p>
-      </div>
-    </div>
+<h2>GET $ROB</h2>
 
-    <a class="share-cta" href="https://twitter.com/robotic" target="_blank" rel="noopener">
-      SHARE ON X / TWITTER
-    </a>
-    <br><br>
-    <a class="x-post-cta" href="https://twitter.com/robotic" target="_blank" rel="noopener">
-      🐦 COMMENT ON OUR FIRST POST &amp; FOLLOW @ROBOTIC ↗
-    </a>
+<div class="buy-steps">
 
-    <div class="meme-flow-tags">
-      <span class="meme-flow-tag">#ROBOTIC</span>
-      <span class="meme-flow-tag">#ROB</span>
-      <span class="meme-flow-tag">#SOLANA</span>
-      <span class="meme-flow-tag">#MEMETOKEN</span>
-      <span class="meme-flow-tag">#BEEPBOOP</span>
-      <span class="meme-flow-tag">#SOLTOTHEMOON</span>
-    </div>
-  </div>
+<div class="buy-step">
+<span class="buy-step-icon">
+<i class="fa-solid fa-wallet"></i>
+</span>
+GET A WALLET
+</div>
 
-  <!-- EMAIL SIGNUP -->
-  <div class="email-section">
-    <h3>STAY IN THE LOOP</h3>
-    <p>// SIGN UP TO RECEIVE ROBOTIC UPDATES — ZERO SPAM //</p>
-    <div class="email-form">
-      <input class="email-input" type="email" placeholder="your@email.com" id="emailInput">
-      <button class="email-submit" onclick="handleEmail()">SUBSCRIBE</button>
-    </div>
-  </div>
+<div class="buy-step">
+<span class="buy-step-icon">
+<i class="fa-solid fa-bolt"></i>
+</span>
+GET SOL
+</div>
 
-  <!-- CONTACT -->
-  <div class="section-head" id="contact-sec">
-    <h2>CONTACT &amp; LINKS</h2>
-    <div class="line"></div>
-  </div>
+<div class="buy-step">
+<span class="buy-step-icon">
+<i class="fa-solid fa-robot"></i>
+</span>
+BUY $ROB
+</div>
 
-  <div class="contact-section">
-    <div class="panel-label">Transmission Channels</div>
-    <div class="contact-grid">
-      <a class="contact-card" href="https://twitter.com/robotic" target="_blank" rel="noopener">
-        <div class="contact-icon">🐦</div>
-        <div class="contact-info">
-          <h4>X / TWITTER</h4>
-          <p>@robotic — Follow &amp; engage with our first post</p>
-        </div>
-        <div class="contact-arrow">▶</div>
-      </a>
-      <a class="contact-card" href="https://t.me/robotic" target="_blank" rel="noopener">
-        <div class="contact-icon">✈️</div>
-        <div class="contact-info">
-          <h4>TELEGRAM</h4>
-          <p>t.me/robotic — Community &amp; announcements</p>
-        </div>
-        <div class="contact-arrow">▶</div>
-      </a>
-      <a class="contact-card" href="mailto:contact@robotic.io">
-        <div class="contact-icon">📡</div>
-        <div class="contact-info">
-          <h4>EMAIL</h4>
-          <p>contact@robotic.io</p>
-        </div>
-        <div class="contact-arrow">▶</div>
-      </a>
-      <a class="contact-card" href="https://solscan.io" target="_blank" rel="noopener">
-        <div class="contact-icon">⛓️</div>
-        <div class="contact-info">
-          <h4>SOLSCAN EXPLORER</h4>
-          <p>On-chain token data — live Solana explorer</p>
-        </div>
-        <div class="contact-arrow">▶</div>
-      </a>
-    </div>
-  </div>
+<div class="buy-step">
+<span class="buy-step-icon">
+<i class="fa-solid fa-camera"></i>
+</span>
+SCREENSHOT IT
+</div>
 
-  <footer>
-    <div>© 2025 <span>ROBOTIC</span> — <span>$ROB</span> on Solana. Not financial advice.</div>
-    <div class="footer-links">
-      <a href="https://twitter.com/robotic" target="_blank">X / Twitter</a>
-      <span class="sep">|</span>
-      <a href="https://t.me/robotic" target="_blank">Telegram</a>
-      <span class="sep">|</span>
-      <a href="https://raydium.io" target="_blank">Raydium</a>
-      <span class="sep">|</span>
-      <a href="https://www.dexview.com" target="_blank">DexView</a>
-    </div>
-  </footer>
+</div>
 
-</div><!-- /screen2 -->
+<a class="share-cta"
+href="https://twitter.com/robecosystem"
+target="_blank">
+SHARE ON X / TWITTER
+</a>
+
+<br><br>
+
+<a class="x-post-cta"
+href="https://twitter.com/robecosystem"
+target="_blank">
+
+<i class="fa-brands fa-x-twitter"></i>
+
+COMMENT ON OUR FIRST POST & FOLLOW @robecosystem
+
+</a>
+
+</div>
+
+<!-- CONTACT -->
+
+<div class="section-head" id="contact-sec">
+<h2>CONTACT & LINKS</h2>
+<div class="line"></div>
+</div>
+
+<div class="contact-section">
+
+<div class="contact-grid">
+
+<a class="contact-card"
+href="https://twitter.com/robecosystem"
+target="_blank">
+
+<div class="contact-icon">
+<i class="fa-brands fa-x-twitter"></i>
+</div>
+
+</a>
+
+<a class="contact-card"
+href="https://t.me/robecosystem"
+target="_blank">
+
+<div class="contact-icon">
+<i class="fa-brands fa-telegram"></i>
+</div>
+
+</a>
+
+<a class="contact-card"
+href="mailto:contact@robecosystem@gmail.com">
+
+<div class="contact-icon">
+<i class="fa-solid fa-envelope"></i>
+</div>
+
+</a>
+
+</div>
+
+<a href="https://solscan.io/token/YOUR_TOKEN_ADDRESS_HERE" target="_blank" class="solscan-link">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  VIEW ON SOLSCAN
+</a>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div>
+© 2026 ROBOTIC — $ROB on Solana
+</div>
+
+<div class="footer-links">
+
+<a href="https://twitter.com/robecosystem" target="_blank">
+X
+</a>
+
+<a href="https://t.me/robecosystem" target="_blank">
+Telegram
+</a>
+
+<a href="https://raydium.io" target="_blank">
+Raydium
+</a>
+
+</div>
+
+</footer>
+
+</div>
 
 <script>
-  function enterSite(){
-    document.getElementById('screen1').classList.add('hidden');
-    const s2 = document.getElementById('screen2');
-    s2.classList.add('visible');
-  }
 
-  function handleEmail(){
-    const val = document.getElementById('emailInput').value.trim();
-    if(!val || !val.includes('@')){
-      alert('Please enter a valid email address.');
-      return;
-    }
-    window.location.href = 'mailto:contact@robotic.io?subject=Subscribe%20me%20to%20ROBOTIC%20updates&body=Please%20add%20me%20to%20the%20ROBOTIC%20mailing%20list%3A%20' + encodeURIComponent(val);
-  }
+function enterSite(){
 
-  // Auto-enter after splash animation
-  setTimeout(()=>{
-    const btn = document.querySelector('.enter-btn');
-    if(btn) btn.style.animation = 'border-pulse 0.6s ease-in-out infinite alternate';
-  }, 2400);
+document.getElementById('screen1').classList.add('hidden');
+
+const s2 = document.getElementById('screen2');
+
+s2.classList.add('visible');
+
+}
+
+window.addEventListener('load',()=>{
+
+const s2=document.getElementById('screen2');
+
+s2.classList.add('visible');
+
+setTimeout(()=>{
+
+document.getElementById('screen1').classList.add('hidden');
+
+},2200);
+
+});
+
+const slides = document.querySelectorAll('.carousel-img');
+
+let currentSlide = 0;
+
+setInterval(() => {
+
+slides[currentSlide].classList.remove('active');
+
+currentSlide = (currentSlide + 1) % slides.length;
+
+slides[currentSlide].classList.add('active');
+
+}, 2500);
+
 </script>
+
 </body>
 </html>
