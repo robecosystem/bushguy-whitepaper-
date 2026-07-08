@@ -1,413 +1,630 @@
-div class="stake-info-col">
-      <div class="stake-info-title">STAKING BENEFITS</div>
-      <ul class="stake-info-list">
-        <li><span>0% </span>platform fees — rewards go 100% to stakers</li>
-        <li><span class="sol-span">On-chain</span> transparent reward distribution</li>
-        <li>Early stakers receive <span class="amber-span">bonus multiplier</span></li>
-        <li>Governance voting rights for <span>$ROB</span> holders</li>
-        <li>Priority access to future <span class="sol-span">AI features</span></li>
-        <li>Staking rewards sourced from <span>ecosystem fund</span></li>
-      </ul>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>$BUSHGUY — Official Whitepaper</title>
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/Bushguymeme/Bushguy-whitepaper-/refs/heads/main/public/whitepaper%20logo.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700;9..144,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --char: #1c1a13;
+    --bark: #2e2716;
+    --ember: #d97e3d;
+    --ember-hot: #f2a35c;
+    --moss: #7c9070;
+    --moss-deep: #4c5c42;
+    --parchment: #f1e9d8;
+    --parchment-dim: #cfc3a3;
+    --smoke: rgba(241,233,216,0.55);
+    --line: rgba(241,233,216,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(217,126,61,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(124,144,112,0.10), transparent 55%),
+      var(--char);
+    color: var(--parchment);
+    font-family: 'Space Mono', monospace;
+    line-height: 1.6;
+  }
+  h1,h2,h3,.display{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  a{color: var(--ember-hot);}
 
-  </div>
-</div>
+  /* ---------- texture layer ---------- */
+  .grain{
+    position: fixed; inset:0; pointer-events:none; z-index: 50;
+    opacity: 0.05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-<div class="stake-notify-bar">
-  <div class="stake-notify-text">
-    <strong>STAKING PORTAL COMING SOON</strong> — Follow @robecosystem for the official launch announcement and APY reveal.
-  </div>
-  <div class="stake-notify-links">
-    <a href="https://twitter.com/robecosystem" target="_blank" class="stake-notify-btn">
-      <i class="fa-brands fa-x-twitter"></i> GET NOTIFIED
-    </a>
-    <a href="https://t.me/robecosystem" target="_blank" class="stake-notify-btn">
-      <i class="fa-brands fa-telegram"></i> TELEGRAM
-    </a>
-  </div>
-</div>
+  /* ---------- nav / sidebar ---------- */
+  .layout{ display:flex; max-width: 1280px; margin: 0 auto; }
+  .sidebar{
+    width: 260px; flex-shrink:0;
+    position: sticky; top:0; height:100vh;
+    padding: 40px 22px;
+    border-right: 1px solid var(--line);
+    display:flex; flex-direction:column; gap: 30px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .mark{
+    width:38px; height:38px; border-radius:50%;
+    object-fit: cover;
+    box-shadow: 0 0 18px rgba(242,163,92,0.45);
+    border: 1px solid rgba(242,163,92,0.5);
+    flex-shrink:0;
+  }
+  .brand-name{ font-family:'Fraunces',serif; font-weight:900; font-size:1.05rem; letter-spacing:0.02em; }
+  .brand-sub{ font-size:0.62rem; color:var(--parchment-dim); letter-spacing:0.14em; text-transform:uppercase; margin-top:2px;}
 
-</div>
-</div>
+  .navlist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; font-size:0.78rem;}
+  .navlist a{
+    display:flex; gap:10px; align-items:baseline;
+    color: var(--smoke); text-decoration:none;
+    padding: 9px 10px; border-radius:6px;
+    transition: all .18s ease;
+    border-left: 2px solid transparent;
+  }
+  .navlist a:hover, .navlist a.active{
+    color: var(--parchment); background: rgba(217,126,61,0.08);
+    border-left: 2px solid var(--ember);
+  }
+  .navlist .num{ color: var(--ember); font-size:0.68rem; }
 
-<!-- WHITEPAPER -->
+  .sidebar-foot{ margin-top:auto; font-size:0.65rem; color:var(--parchment-dim); }
+  .sidebar-foot .tag{
+    display:inline-block; margin-top:10px; padding:5px 9px;
+    border:1px solid var(--line); border-radius: 20px; font-size:0.62rem;
+    color: var(--moss);
+  }
 
-<div class="section-head" id="whitepaper-sec">
-<h2>WHITEPAPER — OFFICIAL DOCUMENTATION</h2>
-<div class="line"></div>
-</div>
+  .content{ flex:1; min-width:0; padding: 0 0 80px; }
 
-<div class="whitepaper-section">
-<div class="whitepaper-inner">
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 90px 64px 60px;
+    border-bottom: 1px solid var(--line);
+    position: relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; right:-120px; top:-120px; width:420px; height:420px;
+    background: radial-gradient(circle, rgba(217,126,61,0.18), transparent 70%);
+    filter: blur(10px);
+  }
+  .eyebrow{
+    font-size: 0.72rem; letter-spacing:0.22em; text-transform:uppercase;
+    color: var(--moss); margin-bottom: 22px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:26px; height:1px; background: var(--moss); }
+  h1.hero-title{
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 0.98; margin: 0 0 22px; color: var(--parchment);
+  }
+  h1.hero-title em{
+    font-style: normal; color: transparent;
+    -webkit-text-stroke: 1.5px var(--ember-hot);
+  }
+  .hero-desc{
+    max-width: 620px; color: var(--smoke); font-size: 0.95rem; margin-bottom: 40px;
+  }
+  .stat-row{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap:1px;
+    background: var(--line); border:1px solid var(--line); border-radius: 10px; overflow:hidden;
+  }
+  .stat-cell{ background: rgba(46,39,22,0.55); padding: 20px 18px; }
+  .stat-cell .label{ font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color: var(--parchment-dim); margin-bottom:8px;}
+  .stat-cell .value{ font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; color: var(--ember-hot); }
 
-<div class="whitepaper-hero">
+  /* ---------- sections ---------- */
+  section{ padding: 70px 64px; border-bottom: 1px solid var(--line); scroll-margin-top: 30px;}
+  .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom: 34px; }
+  .section-head .idx{ font-family:'Fraunces',serif; font-size:0.85rem; color: var(--ember); }
+  .section-head h2{ font-size: clamp(1.6rem,3vw,2.3rem); margin:0; color: var(--parchment); }
+  .lede{ max-width: 760px; color: var(--smoke); font-size: 0.92rem; margin-bottom: 30px;}
 
-  <!-- Info block -->
-  <div class="whitepaper-info">
+  .badge-list{ display:flex; flex-direction:column; gap:14px; max-width: 700px; }
+  .badge-item{
+    display:flex; gap:14px; padding: 16px 18px;
+    background: rgba(124,144,112,0.06); border:1px solid var(--line); border-radius:10px;
+  }
+  .badge-item .glyph{ color: var(--moss); font-family:'Fraunces',serif; font-weight:700; }
+  .badge-item p{ margin:0; font-size:0.85rem; color: var(--smoke); }
+  .badge-item strong{ color: var(--parchment); }
 
-    <div class="whitepaper-badge">
-      <span class="whitepaper-badge-dot"></span>
-      OFFICIAL DOCUMENT — 2026
-    </div>
+  /* character modes */
+  .mode-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; }
+  .mode-card{
+    padding: 22px; border:1px solid var(--line); border-radius: 12px;
+    background: linear-gradient(160deg, rgba(217,126,61,0.06), transparent 60%);
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .mode-card:hover{ transform: translateY(-4px); border-color: var(--ember); }
+  .mode-card .m-title{ font-family:'Fraunces',serif; font-weight:600; color: var(--ember-hot); font-size:1.05rem; margin-bottom:8px;}
+  .mode-card p{ margin:0; font-size:0.8rem; color: var(--smoke); }
 
-    <div class="whitepaper-title">ROBOTIC ($ROB)<br>OFFICIAL WHITEPAPER</div>
+  /* ---------- tokenomics / donut ---------- */
+  .tokenomics-wrap{
+    display:grid; grid-template-columns: 340px 1fr; gap: 50px; align-items:center;
+  }
+  .donut-box{ display:flex; flex-direction:column; align-items:center; gap: 18px; }
+  .donut-caption{ font-size:0.68rem; color: var(--parchment-dim); text-align:center; max-width:260px; }
 
-    <div class="whitepaper-desc">
-      The complete technical and economic documentation for the ROBOTIC ecosystem.<br>
-      Tokenomics. Presale mechanics. AI architecture. Staking protocol. Roadmap.<br>
-      Everything Unit RB-7749 runs on — transparent, on-chain, machine-grade.
-    </div>
+  .legend{ display:flex; flex-direction:column; gap: 12px; margin-top: 6px; width:100%; max-width:300px;}
+  .legend-row{ display:flex; align-items:center; gap:10px; font-size:0.78rem; }
+  .legend-swatch{ width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+  .legend-row .lg-label{ color: var(--parchment); flex:1; }
+  .legend-row .lg-pct{ color: var(--ember-hot); font-weight:700; }
 
-    <div class="whitepaper-meta-row">
-      <div class="whitepaper-meta-item">
-        <span class="whitepaper-meta-label">VERSION</span>
-        <span class="whitepaper-meta-val">v1.0 — 2026</span>
+  table.tokentable{ width:100%; border-collapse: collapse; font-size: 0.82rem; }
+  table.tokentable th{
+    text-align:left; text-transform:uppercase; letter-spacing:0.08em; font-size:0.65rem;
+    color: var(--moss); padding: 10px 14px; border-bottom: 1px solid var(--line);
+  }
+  table.tokentable td{ padding: 13px 14px; border-bottom: 1px solid var(--line); color: var(--smoke); }
+  table.tokentable td.status{ color: var(--moss); }
+  table.tokentable tr:hover td{ background: rgba(217,126,61,0.05); color: var(--parchment); }
+  table.tokentable td.strong{ color: var(--parchment); font-weight:700; }
+
+  /* ---------- security ---------- */
+  .security-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 18px;}
+  .sec-card{
+    padding: 24px; border-radius:12px; border:1px solid var(--line);
+    background: rgba(28,26,19,0.4);
+    position:relative;
+  }
+  .sec-card::before{
+    content:"🔥"; position:absolute; top:20px; right:20px; opacity:0.35; font-size:1rem;
+  }
+  .sec-card h3{ font-size:1rem; margin:0 0 10px; color: var(--ember-hot); }
+  .sec-card p{ margin:0; font-size:0.82rem; color: var(--smoke); }
+
+  /* ---------- roadmap ---------- */
+  .roadmap{ display:flex; flex-direction:column; gap:0; max-width: 820px; }
+  .phase{ display:grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 26px 0; border-top:1px solid var(--line); }
+  .phase:last-child{ border-bottom: 1px solid var(--line); }
+  .phase .p-status{ font-size:0.65rem; text-transform:uppercase; letter-spacing:0.08em; }
+  .phase .p-status.done{ color: var(--moss); }
+  .phase .p-status.now{ color: var(--ember-hot); }
+  .phase .p-status.next{ color: var(--parchment-dim); }
+  .phase h3{ margin: 6px 0 12px; font-size: 1.15rem; color: var(--parchment); }
+  .phase ul{ margin:0; padding-left: 18px; color: var(--smoke); font-size:0.83rem; display:flex; flex-direction:column; gap:6px;}
+
+  /* ---------- market table ---------- */
+  .growth-table{ width:100%; border-collapse:collapse; font-size:0.82rem; }
+  .growth-table th{ text-align:left; padding:10px 14px; color: var(--moss); text-transform:uppercase; font-size:0.62rem; letter-spacing:0.08em; border-bottom:1px solid var(--line); }
+  .growth-table td{ padding:13px 14px; border-bottom:1px solid var(--line); color:var(--smoke); }
+  .growth-table td.growth-x{ color: var(--ember-hot); font-weight:700; }
+  .disclaimer-note{ font-size:0.72rem; color: var(--parchment-dim); margin-top:16px; font-style:italic; }
+
+  /* ---------- how to buy ---------- */
+  .steps{ display:flex; flex-direction:column; gap:0; max-width: 760px;}
+  .step{ display:grid; grid-template-columns: 46px 1fr; gap: 20px; padding: 22px 0; border-top:1px solid var(--line); }
+  .step:last-child{ border-bottom:1px solid var(--line); }
+  .step .snum{
+    width:40px;height:40px;border-radius:50%; border:1px solid var(--ember);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; color: var(--ember-hot); font-size:0.95rem;
+  }
+  .step h3{ margin:0 0 6px; font-size:1rem; color:var(--parchment); }
+  .step p{ margin:0; font-size:0.82rem; color: var(--smoke); }
+  .security-note{
+    margin-top:20px; padding:16px 18px; border-radius:10px;
+    background: rgba(217,126,61,0.08); border:1px solid rgba(217,126,61,0.3);
+    font-size:0.8rem; color: var(--ember-hot);
+  }
+
+  /* ---------- risk ---------- */
+  .risk-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:14px;}
+  .risk-item{ padding:18px 20px; border-left: 3px solid var(--ember); background: rgba(217,126,61,0.04); border-radius: 0 8px 8px 0;}
+  .risk-item .r-title{ font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color: var(--ember-hot); margin-bottom:6px;}
+  .risk-item p{ margin:0; font-size:0.8rem; color: var(--smoke); }
+
+  .final{
+    padding: 70px 64px 90px; text-align:center;
+  }
+  .final h2{ font-size: clamp(1.8rem,4vw,2.6rem); margin-bottom: 14px; }
+  .final p{ color: var(--smoke); max-width:520px; margin: 0 auto 28px; font-size:0.9rem;}
+  .social-row{ display:flex; gap:14px; justify-content:center; }
+  .social-circle{
+    width:48px; height:48px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line); color: var(--parchment);
+    text-decoration:none; font-size:1.1rem;
+    transition: all .2s ease;
+    background: rgba(241,233,216,0.03);
+  }
+  .social-circle:hover{ border-color: var(--ember); color: var(--ember-hot); transform: translateY(-3px); background: rgba(217,126,61,0.1); }
+
+  @media (max-width: 900px){
+    .layout{ flex-direction:column; }
+    .sidebar{ position:relative; height:auto; width:100%; flex-direction:row; align-items:center; justify-content:space-between; padding:18px 20px; }
+    .navlist{ display:none; }
+    .sidebar-foot{ display:none; }
+    .hero, section, .final{ padding-left: 26px; padding-right:26px; }
+    .tokenomics-wrap{ grid-template-columns: 1fr; }
+    .stat-row{ grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="mark" src="https://raw.githubusercontent.com/Bushguymeme/Bushguy-whitepaper-/refs/heads/main/public/whitepaper%20logo.jpg" alt="Bush Guy logo" />
+      <div>
+        <div class="brand-name">BUSH GUY</div>
+        <div class="brand-sub">$BUSHGUY · Solana</div>
       </div>
-      <div class="whitepaper-meta-item">
-        <span class="whitepaper-meta-label">NETWORK</span>
-        <span class="whitepaper-meta-val">SOLANA</span>
+    </div>
+
+    <ul class="navlist">
+      <li><a href="#intro"><span class="num">01</span> Introduction & Vision</a></li>
+      <li><a href="#concept"><span class="num">02</span> The Bush Guy Concept</a></li>
+      <li><a href="#tokenomics"><span class="num">03</span> Tokenomics</a></li>
+      <li><a href="#security"><span class="num">04</span> Security & Trust</a></li>
+      <li><a href="#roadmap"><span class="num">05</span> Expedition Map</a></li>
+      <li><a href="#community"><span class="num">06</span> Community & Culture</a></li>
+      <li><a href="#buy"><span class="num">07</span> How to Buy</a></li>
+      <li><a href="#risk"><span class="num">08</span> Risk Disclaimer</a></li>
+    </ul>
+
+    <div class="sidebar-foot">
+      Version 1.0 — June 2026
+      <div class="tag">● Campfire Live</div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- HERO -->
+    <section class="hero" id="intro">
+      <div class="eyebrow">The Solana Wilderness Meme Coin</div>
+      <h1 class="hero-title">Stay calm.<br>Hold firm.<br>Let the <em>jungle</em> do its work.</h1>
+      <p class="hero-desc">
+        In a market defined by panic selling and developer dumping, $BUSHGUY offers something rare —
+        a token where the rules are set in stone and the campfire never goes cold. Liquidity burned forever.
+        Zero hidden taxes. Community first, always.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <div class="label">Total Supply</div>
+          <div class="value">690B</div>
+        </div>
+        <div class="stat-cell">
+          <div class="label">Tax</div>
+          <div class="value">0% / 0%</div>
+        </div>
+        <div class="stat-cell">
+          <div class="label">Liquidity</div>
+          <div class="value">35% Burned</div>
+        </div>
+        <div class="stat-cell">
+          <div class="label">Network</div>
+          <div class="value">Solana</div>
+        </div>
       </div>
-      <div class="whitepaper-meta-item">
-        <span class="whitepaper-meta-label">FORMAT</span>
-        <span class="whitepaper-meta-val">PDF</span>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section id="intro-body">
+      <div class="section-head"><span class="idx">01</span><h2>Introduction & Vision</h2></div>
+      <p class="lede">
+        The Solana blockchain has become the premier ecosystem for high-velocity, community-driven meme tokens.
+        Within this wilderness of speculation, rug pulls, and fleeting hype, $BUSHGUY emerges as a beacon of
+        radical transparency — a token built entirely for the community, with a fair public presale, permanently
+        locked liquidity, and a fully disclosed ecosystem reserve.
+      </p>
+      <div class="badge-list">
+        <div class="badge-item">
+          <span class="glyph">◆</span>
+          <p><strong>No rug pulls</strong> — liquidity is burned forever, making developer abandonment structurally impossible.</p>
+        </div>
+        <div class="badge-item">
+          <span class="glyph">◆</span>
+          <p><strong>Fair launch structure</strong> — 55% Public Presale, 35% Liquidity Pool, 10% reserved for DEX listing, development, marketing, and partnerships.</p>
+        </div>
+        <div class="badge-item">
+          <span class="glyph">◆</span>
+          <p><strong>No hidden taxes</strong> — 0% buy and 0% sell tax, always.</p>
+        </div>
+        <div class="badge-item">
+          <span class="glyph">◆</span>
+          <p><strong>Community first</strong> — every decision is driven by the holders, the pioneers at the campfire.</p>
+        </div>
       </div>
-      <div class="whitepaper-meta-item">
-        <span class="whitepaper-meta-label">PAGES</span>
-        <span class="whitepaper-meta-val">12 SECTIONS</span>
+    </section>
+
+    <!-- CONCEPT -->
+    <section id="concept">
+      <div class="section-head"><span class="idx">02</span><h2>The Bush Guy Concept</h2></div>
+      <p class="lede">
+        Bush Guy is not just a mascot — he is a state of mind. Modeled after the archetype of the ultimate
+        survivalist, Bush Guy sits comfortably by his crackling campfire while the rest of the crypto jungle
+        burns around him. He is immune to FUD. He does not panic sell. He sips his billy tea and watches the stars.
+      </p>
+      <p class="lede">
+        In a meme coin landscape saturated with dogs, frogs, and cats, $BUSHGUY occupies a completely unique
+        cultural niche — the wilderness survivalist who thrives where others fail.
+      </p>
+      <div class="mode-grid">
+        <div class="mode-card"><div class="m-title">Chilling</div><p>The default state. Calm, collected, sipping tea by the fire.</p></div>
+        <div class="mode-card"><div class="m-title">Slashing</div><p>When markets get volatile, Bush Guy adapts.</p></div>
+        <div class="mode-card"><div class="m-title">Ferrari</div><p>The moonshot mode — representing aspirational wealth goals.</p></div>
+        <div class="mode-card"><div class="m-title">Swimming</div><p>Riding the liquidity waves with ease.</p></div>
+        <div class="mode-card"><div class="m-title">Flexing</div><p>Diamond hands, maximum conviction.</p></div>
       </div>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <section id="tokenomics">
+      <div class="section-head"><span class="idx">03</span><h2>Tokenomics</h2></div>
+      <p class="lede">
+        $BUSHGUY tokenomics are designed with one principle: maximum transparency. There are no hidden
+        mechanisms, no vesting cliffs, and no undisclosed team wallets.
+      </p>
+
+      <div class="tokenomics-wrap">
+        <div class="donut-box">
+          <svg width="280" height="280" viewBox="0 0 280 280">
+            <!-- background ring -->
+            <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(241,233,216,0.06)" stroke-width="34"/>
+            <!-- Public Presale 55% -->
+            <circle cx="140" cy="140" r="100" fill="none" stroke="#d97e3d" stroke-width="34"
+              stroke-dasharray="345.6 628.3" stroke-dashoffset="0" transform="rotate(-90 140 140)" stroke-linecap="butt"/>
+            <!-- Liquidity Pool 35% -->
+            <circle cx="140" cy="140" r="100" fill="none" stroke="#7c9070" stroke-width="34"
+              stroke-dasharray="219.9 628.3" stroke-dashoffset="-345.6" transform="rotate(-90 140 140)" stroke-linecap="butt"/>
+            <!-- DEX/Dev/Marketing 10% -->
+            <circle cx="140" cy="140" r="100" fill="none" stroke="#f2a35c" stroke-width="34"
+              stroke-dasharray="62.8 628.3" stroke-dashoffset="-565.5" transform="rotate(-90 140 140)" stroke-linecap="butt"/>
+            <text x="140" y="132" text-anchor="middle" fill="#f1e9d8" font-family="Fraunces, serif" font-size="26" font-weight="700">690B</text>
+            <text x="140" y="154" text-anchor="middle" fill="#cfc3a3" font-family="Space Mono, monospace" font-size="11" letter-spacing="1">TOTAL SUPPLY</text>
+          </svg>
+          <div class="legend">
+            <div class="legend-row">
+              <span class="legend-swatch" style="background:#d97e3d;"></span>
+              <span class="lg-label">Public Presale</span>
+              <span class="lg-pct">55%</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-swatch" style="background:#7c9070;"></span>
+              <span class="lg-label">Liquidity Pool (Burned)</span>
+              <span class="lg-pct">35%</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-swatch" style="background:#f2a35c;"></span>
+              <span class="lg-label">DEX / Dev / Marketing</span>
+              <span class="lg-pct">10%</span>
+            </div>
+          </div>
+          <p class="donut-caption">Every allocation publicly declared and locked into the launch structure from day one.</p>
+        </div>
+
+        <div>
+          <table class="tokentable">
+            <thead>
+              <tr><th>Metric</th><th>Value</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Total Supply</td><td class="strong">690,000,000,000</td><td class="status">✓ Fixed Forever</td></tr>
+              <tr><td>Public Presale</td><td class="strong">379,500,000,000 (55%)</td><td class="status">✓ Open to All</td></tr>
+              <tr><td>Liquidity Pool</td><td class="strong">241,500,000,000 (35%)</td><td class="status">✓ LP Burned</td></tr>
+              <tr><td>DEX / Dev / Marketing / Partners</td><td class="strong">69,000,000,000 (10%)</td><td class="status">✓ Ecosystem Growth</td></tr>
+              <tr><td>Buy Tax</td><td class="strong">0%</td><td class="status">✓ No Hidden Drain</td></tr>
+              <tr><td>Sell Tax</td><td class="strong">0%</td><td class="status">✓ No Hidden Drain</td></tr>
+              <tr><td>Mint Authority</td><td class="strong">REVOKED</td><td class="status">✓ Cannot Inflate Supply</td></tr>
+              <tr><td>Freeze Authority</td><td class="strong">REVOKED</td><td class="status">✓ Cannot Freeze Wallets</td></tr>
+              <tr><td>LP Tokens</td><td class="strong">BURNED</td><td class="status">✓ Permanent Liquidity</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECURITY -->
+    <section id="security">
+      <div class="section-head"><span class="idx">04</span><h2>Security & Trust</h2></div>
+      <p class="lede">
+        Security is the foundation of every decision made in the $BUSHGUY ecosystem. The following immutable
+        actions ensure no single party — including the original deployers — can manipulate, inflate, or rug the token.
+      </p>
+      <div class="security-grid">
+        <div class="sec-card">
+          <h3>Liquidity Pool Burned</h3>
+          <p>LP tokens have been permanently sent to a Solana black-hole wallet — liquidity backing $BUSHGUY on Raydium can never be withdrawn.</p>
+        </div>
+        <div class="sec-card">
+          <h3>Mint Authority Revoked</h3>
+          <p>The ability to create new $BUSHGUY tokens is permanently disabled on-chain. 690,000,000,000 is the final supply, forever.</p>
+        </div>
+        <div class="sec-card">
+          <h3>Freeze Authority Revoked</h3>
+          <p>No entity can freeze token accounts or prevent holders from transacting. Your tokens stay fully in your control.</p>
+        </div>
+        <div class="sec-card">
+          <h3>Contract Keys Burned</h3>
+          <p>Original deployment keys have been destroyed in the campfire. No upgrade or malicious action is possible post-launch.</p>
+        </div>
+        <div class="sec-card">
+          <h3>Zero Team Wallets</h3>
+          <p>No developer or team wallets hold $BUSHGUY. Deployers participated only as public buyers with no preferential allocation.</p>
+        </div>
+        <div class="sec-card">
+          <h3>Solana Advantages</h3>
+          <p>Near-instant finality (sub-400ms), fees averaging fractions of a cent, and deep Raydium DEX liquidity infrastructure.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap">
+      <div class="section-head"><span class="idx">05</span><h2>Roadmap — The Expedition Map</h2></div>
+      <p class="lede">Four phases, each building on the momentum of the last. The campfire started with dry grass — we're hacking our path toward the golden oasis.</p>
+      <div class="roadmap">
+        <div class="phase">
+          <div><div class="p-status done">Phase 1</div><div class="p-status done">✓ Complete</div></div>
+          <div>
+            <h3>Forest Conception</h3>
+            <ul>
+              <li>Concept birth — drawing Bush Guy in his forest camp</li>
+              <li>Deployed $BUSHGUY on Solana with 690 billion total supply</li>
+              <li>35% of supply deposited to Raydium liquidity pool as permanent LP</li>
+              <li>Contract keys burned — zero mint/freeze authority</li>
+              <li>Liquidity pool LP tokens burned permanently</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div><div class="p-status now">Phase 2</div><div class="p-status now">In Orbit</div></div>
+          <div>
+            <h3>Wilderness Gathering</h3>
+            <ul>
+              <li>Meme creation campaigns across TikTok, X, and YouTube Shorts</li>
+              <li>Community launch targeting 5,000+ rugged pioneers</li>
+              <li>CoinGecko and CoinMarketCap listing applications</li>
+              <li>Community voting on next Bush Guy animation moment</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div><div class="p-status next">Phase 3</div><div class="p-status next">Hacking Next</div></div>
+          <div>
+            <h3>Jeep Outfitting</h3>
+            <ul>
+              <li>Strategic collaborations with top Solana meme projects</li>
+              <li>Limited-edition Bush Guy survival merch (hats, knives, flasks)</li>
+              <li>Tier-2 exchange listings (MEXC, Gate.io, LBank)</li>
+              <li>Real-world charity campaign: tree planting and wildlife habitat preservation</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase">
+          <div><div class="p-status next">Phase 4</div><div class="p-status next">The Infinite Flex</div></div>
+          <div>
+            <h3>Golden Oasis</h3>
+            <ul>
+              <li>Billboard takeover in key financial cities</li>
+              <li>Unveiling a real, custom Bush Guy Ferrari</li>
+              <li>Integration with Solana Telegram mini-apps and tap-to-earn adventure games</li>
+              <li>Becoming the undisputed global king of wilderness meme culture</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section id="community">
+      <div class="section-head"><span class="idx">06</span><h2>Community & Culture</h2></div>
+      <p class="lede">
+        The greatest strength of any meme coin is its community. $BUSHGUY is built on the conviction that
+        organic, grassroots growth — driven by genuine enthusiasm and shared culture — outperforms any paid
+        marketing campaign. We call our early holders <strong style="color:var(--parchment)">Pioneers</strong>.
+      </p>
+      <table class="growth-table">
+        <thead>
+          <tr><th>Stage</th><th>Est. Market Cap</th><th>Coin Value (est.)</th><th>Growth</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ground Floor (Now)</td><td>$100,000</td><td>$0.0000001449</td><td class="growth-x">1x</td></tr>
+          <tr><td>Viral Organic Shilling</td><td>$1,000,000</td><td>$0.0000014493</td><td class="growth-x">10x</td></tr>
+          <tr><td>Solana Ecosystem Spotlight</td><td>$10,000,000</td><td>$0.0000144928</td><td class="growth-x">100x</td></tr>
+          <tr><td>Tier-1 Exchange Listing</td><td>$100,000,000</td><td>$0.0001449275</td><td class="growth-x">1,000x</td></tr>
+          <tr><td>Global Culture Icon Tier</td><td>$1,000,000,000</td><td>$0.0014492754</td><td class="growth-x">10,000x</td></tr>
+        </tbody>
+      </table>
+      <p class="disclaimer-note">These projections are purely illustrative based on historical meme coin market dynamics and do not constitute financial advice or guarantees of any kind.</p>
+    </section>
+
+    <!-- HOW TO BUY -->
+    <section id="buy">
+      <div class="section-head"><span class="idx">07</span><h2>How to Buy $BUSHGUY</h2></div>
+      <p class="lede">Acquiring $BUSHGUY is straightforward. Follow these steps to join the campfire.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div><h3>Get a Solana Wallet</h3><p>Download and set up a Solana-compatible wallet such as Phantom, Solflare, or Backpack. Securely back up your seed phrase — never share it with anyone.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum">2</div>
+          <div><h3>Fund Your Wallet with SOL</h3><p>Purchase SOL from a centralized exchange (Coinbase, Binance, Kraken) and transfer it to your Solana wallet, covering purchase and network fees.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum">3</div>
+          <div><h3>Connect to Raydium</h3><p>Navigate to raydium.io and connect your wallet. Raydium is the primary Solana DEX where $BUSHGUY trades. Always verify the official domain.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum">4</div>
+          <div><h3>Swap SOL for $BUSHGUY</h3><p>Use the Swap function with the official contract address. Set slippage to 1–3% for normal conditions — 0% tax means no extra slippage needed.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum">5</div>
+          <div><h3>HODL at the Campfire</h3><p>With $BUSHGUY secured in your wallet, you're a Pioneer. Engage with the community and hold with diamond-hand conviction.</p></div>
+        </div>
+      </div>
+      <div class="security-note">
+        ⚠ Always verify the official contract address from official $BUSHGUY social channels before swapping. Never interact with contract addresses sent via DM or unofficial sources.
+      </div>
+    </section>
+
+    <!-- RISK -->
+    <section id="risk">
+      <div class="section-head"><span class="idx">08</span><h2>Risk Disclaimer</h2></div>
+      <p class="lede">$BUSHGUY is a purely speculative, decentralized meme coin intended for entertainment, community engagement, and cultural participation. Please read carefully before participating in any $BUSHGUY transactions.</p>
+      <div class="risk-grid">
+        <div class="risk-item"><div class="r-title">No Financial Advice</div><p>Nothing in this whitepaper constitutes financial, investment, tax, or legal advice.</p></div>
+        <div class="risk-item"><div class="r-title">Speculative Asset</div><p>$BUSHGUY has zero intrinsic utility and represents no yield guarantees, dividends, profits, or ownership.</p></div>
+        <div class="risk-item"><div class="r-title">Extreme Volatility</div><p>Meme coins are highly speculative and subject to extreme price volatility. Value can go to zero at any time.</p></div>
+        <div class="risk-item"><div class="r-title">No Guarantees</div><p>All market cap projections and multiplier scenarios are purely illustrative, not promises or predictions.</p></div>
+        <div class="risk-item"><div class="r-title">Regulatory Risk</div><p>Cryptocurrency regulations vary by jurisdiction. You're solely responsible for lawful participation.</p></div>
+        <div class="risk-item"><div class="r-title">Only Risk What You Can Lose</div><p>Only allocate capital you're entirely prepared to lose in full.</p></div>
+        <div class="risk-item"><div class="r-title">No Team Liability</div><p>The $BUSHGUY community and original deployers accept no liability for financial losses.</p></div>
+        <div class="risk-item"><div class="r-title">DYOR</div><p>Always do your own research. Verify all contract addresses from official channels before transacting.</p></div>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <div class="final">
+      <h2>The Campfire Never Goes Cold</h2>
+      <p>Join thousands of Pioneers around the campfire. Spread the wilderness. Hold with conviction.</p>
+      <div class="social-row">
+        <a class="social-circle" href="#" title="Twitter/X">𝕏</a>
+        <a class="social-circle" href="#" title="Telegram">✈</a>
+        <a class="social-circle" href="#" title="Raydium">◈</a>
+        <a class="social-circle" href="#" title="Solscan">☰</a>
+      </div>
+      <p style="margin-top:36px; font-size:0.68rem; color:var(--parchment-dim);">© 2026 BushGuy Community — All Campfire Keys Melted</p>
     </div>
 
-    <div class="whitepaper-btns">
-      <a href="https://drive.google.com/file/d/182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6/view?usp=drivesdk"
-         target="_blank"
-         class="wp-btn-primary">
-        <i class="fa-solid fa-file-pdf"></i>
-        READ WHITEPAPER
-      </a>
-      <a href="https://drive.google.com/uc?export=download&id=182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6"
-         target="_blank"
-         class="wp-btn-secondary">
-        <i class="fa-solid fa-download"></i>
-        DOWNLOAD PDF
-      </a>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- Chapter index -->
-<div class="whitepaper-contents">
-  <div class="wp-contents-label">DOCUMENT CONTENTS</div>
-  <div class="wp-chapters">
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">01</span>
-      <span class="wp-chapter-title">Executive Summary</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">02</span>
-      <span class="wp-chapter-title">Introduction &amp; Vision</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">03</span>
-      <span class="wp-chapter-title">What is ROBOTIC ($ROB)?</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">04</span>
-      <span class="wp-chapter-title">Tokenomics</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">05</span>
-      <span class="wp-chapter-title">Presale Details</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">06</span>
-      <span class="wp-chapter-title">Staking Protocol</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">07</span>
-      <span class="wp-chapter-title">Technology &amp; Blockchain</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">08</span>
-      <span class="wp-chapter-title">Ecosystem &amp; Partners</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">09</span>
-      <span class="wp-chapter-title">Roadmap</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">10</span>
-      <span class="wp-chapter-title">Community &amp; Governance</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">11</span>
-      <span class="wp-chapter-title">Security &amp; Audit</span>
-    </div>
-    <div class="wp-chapter">
-      <span class="wp-chapter-num">12</span>
-      <span class="wp-chapter-title">Legal Disclaimer</span>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
-
-<!-- BUY -->
-
-<div class="section-head" id="buy-sec">
-<h2>BUY & SHARE</h2>
-<div class="line"></div>
-</div>
-
-<div class="buy-section">
-
-<h2>GET $ROB</h2>
-
-<div class="buy-steps">
-
-<div class="buy-step">
-<span class="buy-step-icon">
-<i class="fa-solid fa-wallet"></i>
-</span>
-GET A WALLET
-</div>
-
-<div class="buy-step">
-<span class="buy-step-icon">
-<i class="fa-solid fa-bolt"></i>
-</span>
-GET SOL
-</div>
-
-<div class="buy-step">
-<span class="buy-step-icon">
-<i class="fa-solid fa-robot"></i>
-</span>
-BUY $ROB
-</div>
-
-<div class="buy-step">
-<span class="buy-step-icon">
-<i class="fa-solid fa-camera"></i>
-</span>
-SCREENSHOT IT
-</div>
-
-</div>
-
-<a class="share-cta"
-href="https://twitter.com/robecosystem"
-target="_blank">
-SHARE ON X / TWITTER
-</a>
-
-<br><br>
-
-<a class="x-post-cta"
-href="https://twitter.com/robecosystem"
-target="_blank">
-
-<i class="fa-brands fa-x-twitter"></i>
-
-COMMENT ON OUR FIRST POST & FOLLOW @robecosystem
-
-</a>
-
-</div>
-
-<!-- CONTACT -->
-
-<div class="section-head" id="contact-sec">
-<h2>CONTACT & LINKS</h2>
-<div class="line"></div>
-</div>
-
-<div class="contact-section">
-
-<div class="contact-grid">
-
-<a class="contact-card"
-href="https://twitter.com/robecosystem"
-target="_blank">
-
-<div class="contact-icon">
-<i class="fa-brands fa-x-twitter"></i>
-</div>
-
-</a>
-
-<a class="contact-card"
-href="https://t.me/robecosystem"
-target="_blank">
-
-<div class="contact-icon">
-<i class="fa-brands fa-telegram"></i>
-</div>
-
-</a>
-
-<a class="contact-card"
-href="mailto:contact@robecosystem@gmail.com">
-
-<div class="contact-icon">
-<i class="fa-solid fa-envelope"></i>
-</div>
-
-</a>
-
-<a class="contact-card"
-href="https://github.com/robecosystem"
-target="_blank">
-
-<div class="contact-icon">
-<i class="fa-brands fa-github"></i>
-</div>
-
-</a>
-
-</div>
-
-<a href="https://solscan.io/token/YOUR_TOKEN_ADDRESS_HERE" target="_blank" class="solscan-link">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  VIEW ON SOLSCAN
-</a>
-
-</div>
-
-<!-- EMAIL SIGNUP -->
-
-<div class="signup-section">
-<div class="signup-inner">
-
-<div class="signup-label">NEWSLETTER — STAY IN THE LOOP</div>
-
-<div class="signup-title">GET $ROB UPDATES DIRECT TO YOUR INBOX</div>
-
-<div class="signup-desc">
-Presale alerts. Launch announcements. Staking drops. AI feature reveals.<br>
-Zero noise. Maximum signal. 100% ROBOTIC.
-</div>
-
-<div class="signup-form">
-  <input
-    class="signup-input"
-    type="email"
-    id="signup-email-input"
-    placeholder="YOUR_EMAIL@DOMAIN.COM"
-    autocomplete="email"
-  >
-  <button class="signup-btn" onclick="handleSignup()">
-    SUBSCRIBE
-  </button>
-</div>
-
-<div class="signup-privacy">
-// NO SPAM. UNSUBSCRIBE ANYTIME. ROBOTIC NEVER SELLS YOUR DATA. //
-</div>
-
-</div>
-</div>
-
-<!-- FLOATING WHITEPAPER BUTTON -->
-
-<a href="https://drive.google.com/file/d/182bKLgN9hEHLzdEiCMgUi31dfAnpvLW6/view?usp=drivesdk"
-   target="_blank"
-   class="wp-float"
-   title="Read the ROBOTIC Whitepaper">
-
-  <span class="wp-float-label">WHITEPAPER</span>
-
-</a>
-
-<!-- FOOTER -->
-
-<footer>
-
-<div>
-© 2026 ROBOTIC — $ROB on Solana
-</div>
-
-<div class="footer-links">
-
-<a href="https://twitter.com/robecosystem" target="_blank">
-X
-</a>
-
-<a href="https://t.me/robecosystem" target="_blank">
-Telegram
-</a>
-
-<a href="https://raydium.io" target="_blank">
-Raydium
-</a>
-
-</div>
-
-</footer>
-
+  </main>
 </div>
 
 <script>
-
-function enterSite(){
-
-document.getElementById('screen1').classList.add('hidden');
-
-const s2 = document.getElementById('screen2');
-
-s2.classList.add('visible');
-
-}
-
-window.addEventListener('load',()=>{
-
-const s2=document.getElementById('screen2');
-
-s2.classList.add('visible');
-
-setTimeout(()=>{
-
-document.getElementById('screen1').classList.add('hidden');
-
-},2200);
-
-});
-
-const slides = document.querySelectorAll('.carousel-img');
-
-let currentSlide = 0;
-
-setInterval(() => {
-
-slides[currentSlide].classList.remove('active');
-
-currentSlide = (currentSlide + 1) % slides.length;
-
-slides[currentSlide].classList.add('active');
-
-}, 2500);
-
-function handleSignup(){
-  const input = document.getElementById('signup-email-input');
-  const email = input ? input.value.trim() : '';
-  if(!email || !email.includes('@')){
-    input.style.borderLeft = '3px solid #ff0040';
-    input.placeholder = 'ENTER A VALID EMAIL ADDRESS';
-    setTimeout(()=>{
-      input.style.borderLeft = '';
-      input.placeholder = 'YOUR_EMAIL@DOMAIN.COM';
-    }, 2500);
-    return;
-  }
-  // Redirect to mailto with pre-filled subject so it opens the user's email client
-  const subject = encodeURIComponent('Subscribe — ROBOTIC $ROB Updates');
-  const body = encodeURIComponent('Please add me to the ROBOTIC mailing list.\n\nEmail: ' + email + '\n\n// Sent from robecosystem.github.io');
-  window.location.href = 'mailto:contact.robecosystem@gmail.com?subject=' + subject + '&body=' + body;
-}
-
+  // active nav highlight on scroll
+  const links = document.querySelectorAll('.navlist a');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  window.addEventListener('scroll', () => {
+    let idx = 0;
+    sections.forEach((s,i) => {
+      if(s && s.getBoundingClientRect().top < 140) idx = i;
+    });
+    links.forEach(l => l.classList.remove('active'));
+    if(links[idx]) links[idx].classList.add('active');
+  });
 </script>
-
 </body>
 </html>
